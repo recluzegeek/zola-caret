@@ -7,8 +7,6 @@ The name is the blinking terminal cursor *and* the proofreader's insertion mark 
 
 **Features:** neutral warm-gray palette + one configurable accent · light/dark toggle · client-side search · year-grouped archive · tags · projects · publications · resume page · GoatCounter analytics · Giscus comments.
 
----
-
 ## Quick start
 
 ```bash
@@ -17,8 +15,6 @@ zola serve                # live reload at http://127.0.0.1:1111
 zola serve --drafts       # include draft posts (date in the future)
 zola build                # production build → public/
 ```
-
----
 
 ## Step-by-step setup
 
@@ -75,8 +71,6 @@ Write in Markdown here. `## Headings` populate the table of contents automatical
 
 Caret ships self-hosted fonts in `static/fonts/`. By default it uses those. If you'd rather load from Google Fonts CDN, restore the `<link rel="preconnect">` lines in `templates/base.html` and remove the `@use 'partials/tokens'` `@font-face` blocks (or set `src:` to point to an empty file). Pick one — loading both wastes bandwidth.
 
----
-
 ## Where things live
 
 ```
@@ -121,8 +115,6 @@ static/
   fonts/                 self-hosted woff2 files
   js/theme.js            theme toggle · code copy · TOC scroll-spy · search
 ```
-
----
 
 ## How to…
 
@@ -238,8 +230,6 @@ publish     = "public"
 environment = { ZOLA_VERSION = "0.19.2" }
 ```
 
----
-
 ## Using macros
 
 All macros are importable individually or via the backward-compatible `ui.html` shim.
@@ -268,8 +258,6 @@ All macros are importable individually or via the backward-compatible `ui.html` 
 | `project.html` | `card(p)` | `p` — project object from config |
 | `pub.html` | `item(p)` | `p` — publication object from config |
 
----
-
 ## Converting this into a reusable theme
 
 This repo is a working site. To publish Caret as a standalone theme usable by others:
@@ -280,8 +268,6 @@ This repo is a working site. To publish Caret as a standalone theme usable by ot
 4. The `content/` directory and per-site `config.toml` stay in each site's root.
 
 See [Zola theme documentation](https://www.getzola.org/documentation/themes/overview/).
-
----
 
 ## Options reference (`config.toml [extra]`)
 
@@ -307,8 +293,6 @@ See [Zola theme documentation](https://www.getzola.org/documentation/themes/over
 | `tools` | array of strings | Daily drivers line on resume |
 | `[[extra.projects]]` | array | Project cards: `name`, `desc`, `href`, `icon`, `stars`, `forks` |
 | `[[extra.publications]]` | array | Publications: `title`, `venue`, `status`, `note`, `links` |
-
----
 
 ## Roadmap
 
@@ -341,8 +325,6 @@ These are planned improvements in rough priority order. PRs welcome.
 - **Starter kit** — a companion repo with 10 sample posts, filled config, and sample images so new users have something real to look at immediately
 - **Giscus as a macro** — move the comment embed out of `page.html` into `macros/comments.html` so it's overridable without touching core templates
 - **Alternative homepage layouts** — a `homepage_layout` config key that switches between the current terminal-hero layout and a simpler grid layout for non-technical blogs
-
----
 
 ## Acknowledgements
 

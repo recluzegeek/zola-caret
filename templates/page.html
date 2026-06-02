@@ -1,59 +1,81 @@
-{% extends "base.html" %}
-{% import "macros/ui.html" as ui %}
-
-{% block title %}{{ page.title }} · {{ config.title }}{% endblock title %}
-{% block description %}<meta name="description" content="{{ page.extra.dek | default(value=page.summary | default(value='')) | striptags }}">{% endblock description %}
-{% block wide %}wrap--wide{% endblock wide %}
-
-{% block content %}
+{% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block title
+%}{{ page.title }} · {{ config.title }}{% endblock title %} {% block description
+%}<meta
+    name="description"
+    content="{{ page.extra.dek | default(value=page.summary | default(value='')) | striptags }}"
+/>{% endblock description %} {% block wide %}wrap--wide{% endblock wide %} {%
+block content %}
 <article class="article">
-  <header class="article__head">
-    <a class="crumb" href="{{ get_url(path='writings') | safe }}">← writings</a>
-    <h1>{{ page.title }}</h1>
-    <div class="article__meta">
-      <span>{{ page.date | date(format="%d %b %Y") }}</span>
-      <span class="dotsep">{{ page.reading_time }} min read</span>
-      {% if page.taxonomies.tags %}<span class="dotsep">{% for t in page.taxonomies.tags %}#{{ t }}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif %}
+    <header class="article__head">
+        <a class="crumb" href="{{ get_url(path='writings') | safe }}"
+            >← writings</a
+        >
+        <h1>{{ page.title }}</h1>
+        <div class="article__meta">
+            <span>{{ page.date | date(format="%d %b %Y") }}</span>
+            <span class="dotsep">{{ page.reading_time }} min read</span>
+            {% if page.taxonomies.tags %}<span class="dotsep"
+                >{% for t in page.taxonomies.tags %}#{{ t }}{% if not loop.last
+                %} {% endif %}{% endfor %}</span
+            >{% endif %}
+        </div>
+    </header>
+
+    <div class="layout">
+        <div class="prose">{{ page.content | safe }}</div>
+
+        {% if page.toc %}
+        <aside class="toc">
+            <div class="toc__label">on this page</div>
+            <nav>
+                {% for h in page.toc %}
+                <a href="#{{ h.id }}">{{ h.title }}</a>
+                {% for c in h.children %}<a href="#{{ c.id }}" class="lvl3"
+                    >{{ c.title }}</a
+                >{% endfor %} {% endfor %}
+            </nav>
+        </aside>
+        {% endif %}
     </div>
-  </header>
 
-  <div class="layout">
-    <div class="prose">{{ page.content | safe }}</div>
-
-    {% if page.toc %}
-    <aside class="toc">
-      <div class="toc__label">on this page</div>
-      <nav>
-        {% for h in page.toc %}
-        <a href="#{{ h.id }}">{{ h.title }}</a>
-        {% for c in h.children %}<a href="#{{ c.id }}" class="lvl3">{{ c.title }}</a>{% endfor %}
-        {% endfor %}
-      </nav>
-    </aside>
+    {% if page.earlier or page.later %}
+    <footer
+        class="foot"
+        style="margin-top: 46px; border-top: 1px solid var(--border)"
+    >
+        <span
+            >{% if page.earlier %}<a href="{{ page.earlier.permalink | safe }}"
+                >← {{ page.earlier.title }}</a
+            >{% endif %}</span
+        >
+        <span
+            >{% if page.later %}<a href="{{ page.later.permalink | safe }}"
+                >{{ page.later.title }} →</a
+            >{% endif %}</span
+        >
+    </footer>
+    {% endif %} {% if config.extra.giscus_repo %}
+    <section class="comments">
+        <script
+            src="https://giscus.app/client.js"
+            data-repo="{{ config.extra.giscus_repo }}"
+            data-repo-id="{{ config.extra.giscus_repo_id }}"
+            data-category="{{ config.extra.giscus_category | default(value='General') }}"
+            data-category-id="{{ config.extra.giscus_category_id }}"
+            data-mapping="pathname"
+            data-strict="1"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="top"
+            data-theme="preferred_color_scheme"
+            data-lang="en"
+            crossorigin="anonymous"
+            async
+        ></script>
+    </section>
     {% endif %}
-  </div>
-
-  {% if page.earlier or page.later %}
-  <footer class="foot" style="margin-top:46px;border-top:1px solid var(--border);">
-    <span>{% if page.earlier %}<a href="{{ page.earlier.permalink | safe }}">← {{ page.earlier.title }}</a>{% endif %}</span>
-    <span>{% if page.later %}<a href="{{ page.later.permalink | safe }}">{{ page.later.title }} →</a>{% endif %}</span>
-  </footer>
-  {% endif %}
-
-  {% if config.extra.giscus_repo %}
-  <section class="comments">
-    <script src="https://giscus.app/client.js"
-      data-repo="{{ config.extra.giscus_repo }}"
-      data-repo-id="{{ config.extra.giscus_repo_id }}"
-      data-category="{{ config.extra.giscus_category | default(value='General') }}"
-      data-category-id="{{ config.extra.giscus_category_id }}"
-      data-mapping="pathname" data-strict="1" data-reactions-enabled="1"
-      data-emit-metadata="0" data-input-position="top"
-      data-theme="preferred_color_scheme" data-lang="en" crossorigin="anonymous" async>
-    </script>
-  </section>
-  {% endif %}
 </article>
-{% endblock content %}
-
-{% block footer_right %}<a href="{{ get_url(path='writings') | safe }}">← all writings</a>{% endblock footer_right %}
+{% endblock content %} {% block footer_right %}<a
+    href="{{ get_url(path='writings') | safe }}"
+    >← all writings</a
+>{% endblock footer_right %}

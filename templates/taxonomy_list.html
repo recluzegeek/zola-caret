@@ -1,9 +1,13 @@
-{% extends "base.html" %}
-{% import "macros/ui.html" as ui %}
-{% block title %}tags · {{ config.title }}{% endblock title %}
-{% block content %}
-<header class="page-head"><h1>tags</h1><p>Browse writings by topic.</p></header>
+{% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block title
+%}tags · {{ config.title }}{% endblock title %} {% block content %}
+<header class="page-head">
+    <h1>tags</h1>
+    <p>Browse writings by topic.</p>
+</header>
 <div class="tagcloud">
-  {% for term in terms %}<a href="{{ term.permalink | safe }}"><span class="tagcloud__name">{{ term.name }}</span><span class="tagcloud__count">{{ term.pages | length }}</span></a>{% endfor %}
+    {% for term in terms %}<a href="{{ term.permalink | safe }}"
+        ><span class="tagcloud__name">{{ term.name }}</span
+        ><span class="tagcloud__count">{{ term.pages | length }}</span></a
+    >{% endfor %}
 </div>
 {% endblock content %}

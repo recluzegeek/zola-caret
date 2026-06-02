@@ -1,0 +1,36 @@
+{# ============================================================
+   macros/cv.html — Resume / CV entry
+   
+   Usage:  {% import "macros/cv.html" as cv %}
+           {{ cv::item(role="...", org="...", date="...", bullets=[...]) }}
+
+   Parameters:
+     role    — job title or paper title (required)
+     org     — organisation name (optional)
+     date    — date string, e.g. "2024 — present" (optional)
+     bullets — array of strings for bullet-point roles (optional)
+     note    — single-line note for education/pub entries (optional)
+     status  — "published" | "in review" | any string → renders a badge (optional)
+   ============================================================ #}
+
+{% macro item(role, org="", date="", bullets=false, note="", status="") %}
+<div class="cv-item">
+  <div class="cv-item__head">
+    <span>
+      <span class="cv-item__role">{{ role }}</span>
+      {% if org %}<span class="cv-item__org">· {{ org }}</span>{% endif %}
+      {% if status %}
+        <span class="cv-status {% if status == 'published' %}is-pub{% endif %}">{{ status }}</span>
+      {% endif %}
+    </span>
+    {% if date %}<span class="cv-item__date">{{ date }}</span>{% endif %}
+  </div>
+  {% if bullets %}
+    <ul class="cv-bullets">
+      {% for b in bullets %}<li>{{ b | safe }}</li>{% endfor %}
+    </ul>
+  {% elif note %}
+    <p class="cv-note">{{ note | safe }}</p>
+  {% endif %}
+</div>
+{% endmacro item %}

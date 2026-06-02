@@ -1,11 +1,11 @@
-{% extends "base.html" %}
-{% import "macros/ui.html" as ui %}
-{% block title %}404 · {{ config.title }}{% endblock title %}
-{% block content %}
+{% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block title
+%}404 · {{ config.title }}{% endblock title %} {% block content %}
 <div class="notfound">
-  <div class="notfound__code">404 · not found</div>
-  <h1>This page wandered off.</h1>
-  <p>The link may be stale, or the page hasn’t been written yet.</p>
-  <a class="btn" href="{{ get_url(path='/') | safe }}">{{ ui::icon(name="arrow") | safe }} back home</a>
+    <div class="notfound__code">404 · not found</div>
+    <h1>This page wandered off.</h1>
+    <p>The link may be stale, or the page hasn’t been written yet.</p>
+    <a class="btn" href="{{ get_url(path='/') | safe }}"
+        >{{ ui::icon(name="arrow") | safe }} back home</a
+    >
 </div>
 {% endblock content %}

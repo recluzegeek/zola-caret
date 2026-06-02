@@ -1,0 +1,32 @@
+{# ============================================================
+   macros/post.html — Post list row
+   
+   Usage:  {% import "macros/post.html" as post %}
+           {{ post::row(page=page, dek=true) }}
+
+   Parameters:
+     page  — a Zola page object (required)
+     dek   — bool; show the deck/summary line (default false)
+             Set dek=true on home + archive pages.
+             Set dek=false on tag-single pages to keep rows compact.
+   ============================================================ #}
+
+{% macro row(page, dek=false) %}
+<a class="post-row" href="{{ page.permalink | safe }}">
+  <span class="post-row__date">{{ page.date | date(format="%d %b %Y") }}</span>
+  <div class="post-row__body">
+    <p class="post-row__title">{{ page.title }}</p>
+    {% if dek %}
+    <p class="post-row__dek">
+      {{ page.extra.dek | default(value=page.summary | default(value="")) | safe }}
+    </p>
+    {% endif %}
+    <p class="post-row__tags">
+      {%- if not dek %}{{ page.reading_time }} min read · {% endif -%}
+      {%- if page.taxonomies.tags -%}
+        {% for t in page.taxonomies.tags %}#{{ t }}{% if not loop.last %} {% endif %}{% endfor %}
+      {%- endif -%}
+    </p>
+  </div>
+</a>
+{% endmacro row %}

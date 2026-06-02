@@ -2,10 +2,11 @@
 
 A Zola theme with an **editorial-serif voice** and a **terminal-mono machine layer** —
 serif (Newsreader) for everything you read, mono (JetBrains Mono) as a deliberate accent
-for the `~/` logo, nav, dates, labels, code, and the `whoami` terminal block. The name is the
-blinking terminal cursor *and* the proofreader's insertion mark — the theme's two halves.
+for the `~/` logo, nav, dates, labels, code, and the `whoami` terminal block.
+
+The name is the blinking terminal cursor *and* the proofreader's insertion mark — the theme's two halves.
 Neutral warm-gray palette + a single configurable accent. Light/dark, built-in search,
-year-grouped archive, tags, projects, publications, and a résumé page.
+year-grouped archive, tags, projects, publications, and a resume page.
 
 Rewritten from scratch; spiritually indebted to Zola's **Apollo** and Astro's **Pure**, and
 to the restraint of [thedataquarry.com](https://thedataquarry.com/).
@@ -27,7 +28,7 @@ Requires Zola ≥ 0.18.
 ## Where things live
 
 ```
-config.toml              ← YOU (identity, nav, socials, résumé data, accent, analytics)
+config.toml              ← YOU (identity, nav, socials, resume data, accent, analytics)
 content/
   _index.md              home (uses templates/index.html)
   writings/              blog posts — one .md per post (Markdown, your workflow)
@@ -35,7 +36,7 @@ content/
     *.md
   projects.md            projects page  (data in config.toml → extra.projects)
   publications.md        publications   (data in config.toml → extra.publications)
-  resume.md              résumé         (data in config.toml → extra.experience/…)
+  resume.md              resume         (data in config.toml → extra.experience/…)
 templates/
   base.html              shell: nav, footer, search modal, search index
   index.html             home (hero + terminal + recent writings)

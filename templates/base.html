@@ -1,3 +1,4 @@
+{% import "macros/ui.html" as ui %}
 <!DOCTYPE html>
 <html lang="{{ lang | default(value=config.default_language) }}">
 <head>
@@ -13,7 +14,6 @@
   {% block head %}{% endblock head %}
 </head>
 <body>
-{% import "macros/ui.html" as ui %}
 {% set id = config.extra.identity %}
 <div class="site" data-theme="{{ config.extra.default_theme | default(value='light') }}">
 
@@ -36,7 +36,7 @@
 
   <footer class="foot">
     <span>© {{ now() | date(format='%Y') }} {{ config.title }}</span>
-    <span>{% block footer_right %}built with <a href="{{ get_url(path='writings') | safe }}">zola</a> · <a href="{{ get_url(path='resume') | safe }}">résumé</a>{% endblock footer_right %}</span>
+    <span>{% block footer_right %}built with <a href="{{ get_url(path='writings') | safe }}">zola</a> · <a href="{{ get_url(path='resume') | safe }}">resume</a>{% endblock footer_right %}</span>
   </footer>
 
   {# search lives inside .site so it inherits theme tokens #}

@@ -1,4 +1,4 @@
 +++
-title = "résumé"
+title = "resume"
 template = "resume.html"
 +++

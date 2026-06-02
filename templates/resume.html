@@ -1,42 +1,83 @@
-{% extends "base.html" %}
-{% import "macros/ui.html" as ui %}
-{% block title %}{{ config.extra.identity.name }} · résumé{% endblock title %}
-{% block wide %}wrap--wide{% endblock wide %}
-{% block content %}
-{% set id = config.extra.identity %}
+{% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block title
+%}{{ config.extra.identity.name }} · resume{% endblock title %} {% block wide
+%}wrap--wide{% endblock wide %} {% block content %} {% set id =
+config.extra.identity %}
 <section class="resume">
-  <header class="resume__head">
-    <h1>{{ id.name }}</h1>
-    <p class="resume__role">{{ config.extra.role }}</p>
-    <div class="resume__links">
-      {% for s in config.extra.socials %}{% if s.icon == "github" %}<a href="{{ s.href }}">{{ ui::icon(name="github") | safe }} {{ s.href | replace(from="https://", to="") }}</a>{% endif %}{% endfor %}
-      {% for s in config.extra.socials %}{% if s.icon == "linkedin" %}<a href="{{ s.href }}">{{ ui::icon(name="linkedin") | safe }} linkedin</a>{% endif %}{% endfor %}
-      <a href="mailto:{{ config.extra.email }}">{{ ui::icon(name="mail") | safe }} {{ config.extra.email }}</a>
-      <span class="resume__dl"><a href="{{ config.extra.resume_pdf | default(value='#') }}">↓ download pdf</a></span>
+    <header class="resume__head">
+        <h1>{{ id.name }}</h1>
+        <p class="resume__role">{{ config.extra.role }}</p>
+        <div class="resume__links">
+            {% for s in config.extra.socials %}{% if s.icon == "github" %}<a
+                href="{{ s.href }}"
+                >{{ ui::icon(name="github") | safe }} {{ s.href |
+                replace(from="https://", to="") }}</a
+            >{% endif %}{% endfor %} {% for s in config.extra.socials %}{% if
+            s.icon == "linkedin" %}<a href="{{ s.href }}"
+                >{{ ui::icon(name="linkedin") | safe }} linkedin</a
+            >{% endif %}{% endfor %}
+            <a href="mailto:{{ config.extra.email }}"
+                >{{ ui::icon(name="mail") | safe }} {{ config.extra.email }}</a
+            >
+            <span class="resume__dl"
+                ><a href="{{ config.extra.resume_pdf | default(value='#') }}"
+                    >↓ download pdf</a
+                ></span
+            >
+        </div>
+    </header>
+
+    <div class="cv-sec">
+        <div class="cv-sec__label">experience</div>
+        <div>
+            {% for it in config.extra.experience %}{{ ui::cv_item(role=it.role,
+            org=it.org | default(value=""), date=it.date | default(value=""),
+            bullets=it.bullets | default(value=[])) }}{% endfor %}
+        </div>
     </div>
-  </header>
 
-  <div class="cv-sec"><div class="cv-sec__label">experience</div><div>
-    {% for it in config.extra.experience %}{{ ui::cv_item(role=it.role, org=it.org | default(value=""), date=it.date | default(value=""), bullets=it.bullets | default(value=[])) }}{% endfor %}
-  </div></div>
-
-  <div class="cv-sec"><div class="cv-sec__label">education</div><div>
-    {% for it in config.extra.education %}{{ ui::cv_item(role=it.role, org=it.org | default(value=""), date=it.date | default(value=""), note=it.note | default(value="")) }}{% endfor %}
-  </div></div>
-
-  <div class="cv-sec"><div class="cv-sec__label">publications &amp; talks</div><div>
-    {% for p in config.extra.publications %}{{ ui::cv_item(role=p.title, date=p.venue, status=p.status, note=p.note | default(value="")) }}{% endfor %}
-  </div></div>
-
-  <div class="cv-sec"><div class="cv-sec__label">skills</div><div>
-    {% for g in config.extra.skills %}
-    <div class="skillgrp"><p class="skillgrp__head">{{ g.label }}</p>
-      <ul>{% for s in g.items %}<li><span class="mk">▹</span><span>{{ s | safe }}</span></li>{% endfor %}</ul>
+    <div class="cv-sec">
+        <div class="cv-sec__label">education</div>
+        <div>
+            {% for it in config.extra.education %}{{ ui::cv_item(role=it.role,
+            org=it.org | default(value=""), date=it.date | default(value=""),
+            note=it.note | default(value="")) }}{% endfor %}
+        </div>
     </div>
-    {% endfor %}
-    <div class="skillgrp skillgrp--drivers"><p class="skillgrp__head">daily drivers</p><span class="skillgrp__items">{{ config.extra.tools | join(sep=" · ") }}</span></div>
-  </div></div>
+
+    <div class="cv-sec">
+        <div class="cv-sec__label">publications &amp; talks</div>
+        <div>
+            {% for p in config.extra.publications %}{{ ui::cv_item(role=p.title,
+            date=p.venue, status=p.status, note=p.note | default(value="")) }}{%
+            endfor %}
+        </div>
+    </div>
+
+    <div class="cv-sec">
+        <div class="cv-sec__label">skills</div>
+        <div>
+            {% for g in config.extra.skills %}
+            <div class="skillgrp">
+                <p class="skillgrp__head">{{ g.label }}</p>
+                <ul>
+                    {% for s in g.items %}
+                    <li>
+                        <span class="mk">▹</span><span>{{ s | safe }}</span>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            <div class="skillgrp skillgrp--drivers">
+                <p class="skillgrp__head">daily drivers</p>
+                <span class="skillgrp__items"
+                    >{{ config.extra.tools | join(sep=" · ") }}</span
+                >
+            </div>
+        </div>
+    </div>
 </section>
-{% endblock content %}
-
-{% block footer_right %}<a href="{{ get_url(path='/') | safe }}">← back home</a>{% endblock footer_right %}
+{% endblock content %} {% block footer_right %}<a
+    href="{{ get_url(path='/') | safe }}"
+    >← back home</a
+>{% endblock footer_right %}

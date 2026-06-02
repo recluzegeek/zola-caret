@@ -16,8 +16,8 @@ taxonomies = [
   { name = "tags", feed = true },
 ]
 
-[markdown]
-highlight_code = false
+[markdown.highlighting]
+theme = "houston"
 # To turn on syntax highlighting later:
 #   highlight_code = true
 #   highlight_theme = "css"   # then add the generated syntax-theme.css
@@ -27,6 +27,7 @@ highlight_code = false
 default_theme = "light"          # "light" or "dark"
 eyebrow = "software engineer"
 email = "hello@msidev.pk"
+role = "Associate Software Engineer — Python · TypeScript · computer vision · cloud"
 # goatcounter_code = "yourcode"  # uncomment to enable GoatCounter analytics
 # resume_pdf = "/resume.pdf"
 # --- Giscus comments (uncomment + fill from giscus.app to enable on posts) ---

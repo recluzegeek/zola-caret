@@ -1,31 +1,44 @@
-{% extends "base.html" %}
-{% import "macros/ui.html" as ui %}
-
-{% block content %}
-{% set id = config.extra.identity %}
+{% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block content
+%} {% set id = config.extra.identity %}
 <header class="hero">
-  <p class="eyebrow">{{ config.extra.eyebrow | default(value="software engineer") }}</p>
-  <h1>Hey, I’m {{ id.name }}.</h1>
-  <p class="bio">{{ config.extra.bio | safe }}</p>
+    <p class="eyebrow">
+        {{ config.extra.eyebrow | default(value="software engineer") }}
+    </p>
+    <h1>Hey, I’m {{ id.name }}.</h1>
+    <p class="bio">{{ config.extra.bio | safe }}</p>
 
-  <div class="term">
-    {% for line in config.extra.terminal %}
-    <div><span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $ {{ line.cmd }}</div>
-    <div class="term__out">{{ line.out }}</div>
-    {% endfor %}
-    <div><span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $ <span class="cursor"></span></div>
-  </div>
+    <div class="term">
+        {% for line in config.extra.terminal %}
+        <div>
+            <span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $ {{
+            line.cmd }}
+        </div>
+        <div class="term__out">{{ line.out }}</div>
+        {% endfor %}
+        <div>
+            <span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $
+            <span class="cursor"></span>
+        </div>
+    </div>
 
-  <div class="social">
-    {% for s in config.extra.socials %}<a href="{{ s.href }}">{{ ui::icon(name=s.icon) | safe }} {{ s.label }}</a>{% endfor %}
-  </div>
+    <div class="social">
+        {% for s in config.extra.socials %}<a href="{{ s.href }}"
+            >{{ ui::icon(name=s.icon) | safe }} {{ s.label }}</a
+        >{% endfor %}
+    </div>
 </header>
 
 <section class="sec">
-  <div class="sec__head"><h2 class="sec__title">writings</h2><a class="sec__more" href="{{ get_url(path='writings') | safe }}">all posts →</a></div>
-  {% set wsec = get_section(path="writings/_index.md") %}
-  <div class="posts">
-    {% for page in wsec.pages | slice(end=4) %}{{ ui::post_row(page=page, dek=true) }}{% endfor %}
-  </div>
+    <div class="sec__head">
+        <h2 class="sec__title">writings</h2>
+        <a class="sec__more" href="{{ get_url(path='writings') | safe }}"
+            >all posts →</a
+        >
+    </div>
+    {% set wsec = get_section(path="writings/_index.md") %}
+    <div class="posts">
+        {% for page in wsec.pages | slice(end=4) %}{{ ui::post_row(page=page,
+        dek=true) }}{% endfor %}
+    </div>
 </section>
 {% endblock content %}

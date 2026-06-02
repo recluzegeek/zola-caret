@@ -4,7 +4,67 @@
    (logo, nav, dates, labels, code, terminal). Neutral + 1 accent.
    ============================================================ */
 
-/* Fonts are loaded via <link> in templates/base.html */
+/* ==========================================================================
+   LOCAL FONTS REGISTRY (static/fonts/)
+   ========================================================================== */
+
+/* --- Newsreader (Body Serif) --- */
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/newsreader-v42-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/newsreader-v42-latin-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/newsreader-v42-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Newsreader';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/newsreader-v42-latin-600.woff2') format('woff2');
+}
+
+/* --- JetBrains Mono (Code & UI Monospace) --- */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-v18-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-v18-latin-500.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/jetbrains-mono-v18-latin-600.woff2') format('woff2');
+}
 
 :root{
   --accent:#137a63;

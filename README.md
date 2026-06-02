@@ -1,29 +1,20 @@
 # Caret
 
-A Zola theme with an **editorial-serif voice** and a **terminal-mono machine layer** —
-serif (Newsreader) for everything you read, mono (JetBrains Mono) as a deliberate accent
-for the `~/` logo, nav, dates, labels, code, and the `whoami` terminal block.
+A Zola theme with an **editorial-serif voice** and a **terminal-mono machine layer** - serif (Newsreader) for everything you read, mono (JetBrains Mono) as a deliberate accent for the `~/` logo, nav, dates, labels, code, and the `whoami` terminal block.
 
-The name is the blinking terminal cursor *and* the proofreader's insertion mark — the theme's two halves.
-Neutral warm-gray palette + a single configurable accent. Light/dark, built-in search,
-year-grouped archive, tags, projects, publications, and a resume page.
+The name is the blinking terminal cursor *and* the proofreader's insertion mark - the theme's two halves.
+Neutral warm-gray palette + a single configurable accent. Light/dark, built-in search,year-grouped archive, tags, projects, publications, and a resume page.
 
-Rewritten from scratch; spiritually indebted to Zola's **Apollo** and Astro's **Pure**, and
-to the restraint of [thedataquarry.com](https://thedataquarry.com/).
-
----
+Rewritten from scratch; spiritually indebted to Zola's **Apollo** & Astro's **Pure**, and to the restraint of [thedataquarry.com](https://thedataquarry.com/).
 
 ## Quick start
 
 ```bash
-# this folder IS a runnable Zola site
 zola serve
 # → http://127.0.0.1:1111
 ```
 
 Requires Zola ≥ 0.18.
-
----
 
 ## Where things live
 
@@ -31,7 +22,7 @@ Requires Zola ≥ 0.18.
 config.toml              ← YOU (identity, nav, socials, resume data, accent, analytics)
 content/
   _index.md              home (uses templates/index.html)
-  writings/              blog posts — one .md per post (Markdown, your workflow)
+  writings/              blog posts - one .md per post (Markdown, your workflow)
     _index.md            archive settings (sort_by = "date")
     *.md
   projects.md            projects page  (data in config.toml → extra.projects)
@@ -54,11 +45,9 @@ static/js/theme.js       theme toggle · code-copy · TOC scroll-spy · search
 The split mirrors a component system: **macros/ui.html** = reusable components,
 **templates/** = pages, **config.toml** = data.
 
----
-
 ## How to…
 
-**Add a post** — drop a Markdown file in `content/writings/`:
+**Add a post** - drop a Markdown file in `content/writings/`:
 
 ```toml
 +++
@@ -75,23 +64,21 @@ Write in Markdown. `## Headings` auto-populate the table of contents.
 
 The archive, tags, search index, prev/next, and home list all update automatically.
 
-**Add a tag** — just use it in a post's `tags`. The `/tags` cloud and per-tag pages are generated.
+**Add a tag** - just use it in a post's `tags`. The `/tags` cloud and per-tag pages are generated.
 
-**Add a brand-new page** — create `templates/mypage.html` (extend `base.html`, fill the
+**Add a brand-new page** - create `templates/mypage.html` (extend `base.html`, fill the
 `content` block), then `content/mypage.md` with `template = "mypage.html"`, then add
 `{ route = "mypage", label = "mypage" }` to `[[extra.nav]]`.
 
-**Add an icon** — one `{% elif name == "x" %}` branch in `macros/ui.html` → `ui::icon(name="x")`.
+**Add an icon** - one `{% elif name == "x" %}` branch in `macros/ui.html` → `ui::icon(name="x")`.
 
-**Change the accent / fonts** — top of `sass/style.scss` (`--accent`, `--serif`, `--mono`).
-
----
+**Change the accent / fonts** - top of `sass/style.scss` (`--accent`, `--serif`, `--mono`).
 
 ## Options (config.toml `[extra]`)
 
 | Key | What |
 |---|---|
-| `identity` | `logo` / `prompt` / `name` — drives the `~/` mark, terminal prompt, greeting |
+| `identity` | `logo` / `prompt` / `name` - drives the `~/` mark, terminal prompt, greeting |
 | `default_theme` | `"light"` or `"dark"` (user toggle persists in localStorage) |
 | `nav`, `socials` | arrays of `{ route, label }` / `{ icon, label, href }` |
 | `bio`, `eyebrow`, `terminal` | homepage hero content |
@@ -99,32 +86,22 @@ The archive, tags, search index, prev/next, and home list all update automatical
 | `goatcounter_code` | set → loads GoatCounter (no cookie banner) |
 | `giscus_*` | set → GitHub-based comments under each post |
 
-### Comments — Giscus (recommended)
+### Comments - Giscus (recommended)
 Enable GitHub Discussions on a repo, install the [giscus app](https://giscus.app), copy the
 generated `repo-id` / `category-id`, and fill the `giscus_*` keys in `config.toml`. Zero infra,
-no database, fits a dev audience. (Prefer Waline if you need non-GitHub commenters — drop its
+no database, fits a dev audience. (Prefer Waline if you need non-GitHub commenters - drop its
 embed into `templates/page.html` where the giscus block is.)
 
-### Analytics — GoatCounter
+### Analytics - GoatCounter
 Create a GoatCounter site, set `goatcounter_code` to your subdomain. Lightweight, privacy-friendly.
 
 ### Search
 Caret embeds a tiny JSON index of your writings in every page (`window.__SEARCH` in `base.html`)
-and filters it client-side — no external library, no `build_search_index`. Press **⌘K** / **/**.
+and filters it client-side - no external library, no `build_search_index`. Press **⌘K** / **/**.
 For very large blogs, switch to Zola's elasticlunr index instead.
 
 ### Syntax highlighting
-Off by default (clean, restrained code blocks). To enable, in `config.toml`:
-
-```toml
-[markdown]
-highlight_code = true
-highlight_theme = "css"
-```
-
-then generate and include a syntax CSS file.
-
----
+See [Syntax Highlighting](https://www.getzola.org/documentation/content/syntax-highlighting/) @zola-docs.
 
 ## Turning this into a reusable theme
 

@@ -28,6 +28,7 @@ default_theme = "light"          # "light" or "dark"
 eyebrow = "software engineer"
 email = "hello@msidev.pk"
 role = "Associate Software Engineer — Python · TypeScript · computer vision · cloud"
+theme_repo = "https://github.com/recluzegeek/zola-caret"
 # goatcounter_code = "yourcode"  # uncomment to enable GoatCounter analytics
 # resume_pdf = "/resume.pdf"
 # --- Giscus comments (uncomment + fill from giscus.app to enable on posts) ---

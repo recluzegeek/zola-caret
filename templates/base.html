@@ -36,7 +36,7 @@
 
   <footer class="foot">
     <span>© {{ now() | date(format='%Y') }} {{ config.title }}</span>
-    <span>{% block footer_right %}built with <a href="{{ get_url(path='writings') | safe }}">zola</a> · <a href="{{ get_url(path='resume') | safe }}">resume</a>{% endblock footer_right %}</span>
+    <span>{% block footer_right %}built with <a href="{{ config.extra.theme_repo | safe }}">zola-caret</a>{% endblock footer_right %}</span>
   </footer>
 
   {# search lives inside .site so it inherits theme tokens #}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% import "macros/ui.html" as ui %}
+
+{% block title %}{{ section.title }} · {{ config.title }}{% endblock title %}
+
+{% block content %}
+<header class="page-head">
+  <h1>{{ section.title }}</h1>
+  <p>{{ section.extra.tagline | default(value="Notes on what I’m building and learning.") }}</p>
+</header>
+
+{# tag filter bar #}
+<div class="filterbar">
+  <a class="filterbar__chip is-active" href="{{ section.permalink | safe }}">all</a>
+  {% set tags = get_taxonomy(kind="tags") %}
+  {% for term in tags.items %}<a class="filterbar__chip" href="{{ term.permalink | safe }}">#{{ term.name }}</a>{% endfor %}
+</div>
+
+{# year-grouped archive #}
+{% set_global last_year = "" %}
+{% for page in section.pages %}
+  {% set y = page.date | date(format="%Y") %}
+  {% if y != last_year %}
+    {% if not loop.first %}</div></div>{% endif %}
+    <div class="archive__year"><div class="archive__ylabel">{{ y }}</div><div class="posts">
+    {% set_global last_year = y %}
+  {% endif %}
+  {{ ui::post_row(page=page, dek=true) }}
+  {% if loop.last %}</div></div>{% endif %}
+{% endfor %}
+{% endblock content %}
+
+{% block footer_right %}<a href="{{ get_url(path='tags') | safe }}">browse tags →</a>{% endblock footer_right %}

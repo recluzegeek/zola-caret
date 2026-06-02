@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default(value=config.default_language) }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap">
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+  {% block description %}<meta name="description" content="{{ config.description | default(value='') }}">{% endblock description %}
+  <link rel="stylesheet" href="{{ get_url(path='style.css', trailing_slash=false) | safe }}">
+  {% if config.extra.goatcounter_code %}<script data-goatcounter="https://{{ config.extra.goatcounter_code }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>{% endif %}
+  {% block head %}{% endblock head %}
+</head>
+<body>
+{% import "macros/ui.html" as ui %}
+{% set id = config.extra.identity %}
+<div class="site" data-theme="{{ config.extra.default_theme | default(value='light') }}">
+
+  <nav class="nav">
+    <a class="nav__brand" href="{{ get_url(path='/') | safe }}"><span class="tilde">~/</span><span>{{ id.logo }}</span></a>
+    <div class="nav__links">
+      {% for item in config.extra.nav %}
+      <a href="{{ get_url(path=item.route) | safe }}" class="{% if current_path and current_path is starting_with('/' ~ item.route) %}is-active{% endif %}">{{ item.label }}</a>
+      {% endfor %}
+    </div>
+    <div class="nav__tools">
+      <button class="searchbtn" data-search>search <kbd>⌘K</kbd></button>
+      <button class="iconbtn" data-toggle-theme aria-label="Toggle theme">{{ ui::icon(name="sun") | replace(from='<svg', to='<svg class="ico-sun"') | safe }}{{ ui::icon(name="moon") | replace(from='<svg', to='<svg class="ico-moon"') | safe }}</button>
+    </div>
+  </nav>
+
+  <main class="wrap {% block wide %}{% endblock wide %}">
+    {% block content %}{% endblock content %}
+  </main>
+
+  <footer class="foot">
+    <span>© {{ now() | date(format='%Y') }} {{ config.title }}</span>
+    <span>{% block footer_right %}built with <a href="{{ get_url(path='writings') | safe }}">zola</a> · <a href="{{ get_url(path='resume') | safe }}">résumé</a>{% endblock footer_right %}</span>
+  </footer>
+
+  {# search lives inside .site so it inherits theme tokens #}
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-modal">
+      <div class="search-modal__input"><span class="search-modal__icon">{{ ui::icon(name="search") | safe }}</span><input id="searchInput" placeholder="Search writings…" autocomplete="off"><kbd>esc</kbd></div>
+      <div class="search-modal__results" id="searchResults"></div>
+      <div class="search-modal__foot"><span><kbd>↵</kbd>open</span><span><kbd>esc</kbd>close</span></div>
+    </div>
+  </div>
+</div>
+
+{# lightweight client search index (no external libs) #}
+{% set wsec = get_section(path="writings/_index.md") %}
+<script>
+window.__SEARCH = [
+{%- for page in wsec.pages -%}
+{"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}, "date": {{ page.date | json_encode | safe }}, "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | safe }}, "dek": {{ page.extra.dek | default(value="") | json_encode | safe }}}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+];
+</script>
+<script src="{{ get_url(path='js/theme.js', trailing_slash=false) | safe }}"></script>
+</body>
+</html>

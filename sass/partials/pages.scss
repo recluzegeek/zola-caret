@@ -1,0 +1,298 @@
+/* ==========================================================================
+   _pages.scss — Archive, search modal, tags, projects, publications, 404
+   Each section is clearly labelled so you can find it quickly.
+   ========================================================================== */
+
+/* ============================================================
+   SHARED — page header used on archive, tags, projects, pubs
+   ============================================================ */
+.page-head {
+  padding: calc(36px * var(--space)) 0 calc(20px * var(--space));
+
+  h1 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  p {
+    font-size: 18px;
+    color: var(--muted);
+    margin: 10px 0 0;
+    max-width: 58ch;
+    line-height: 1.55;
+  }
+}
+
+/* ============================================================
+   ARCHIVE (writings/section.html) — year-grouped post list
+   ============================================================ */
+.archive__year {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 20px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  &:first-of-type { border-top: 0; }
+}
+
+.archive__ylabel {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  padding-top: 18px;
+}
+
+@media (max-width: 600px) {
+  .archive__year { grid-template-columns: 1fr; gap: 6px; }
+  .archive__ylabel { padding-top: 8px; }
+}
+
+/* Tag filter chips above the archive */
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding: calc(8px * var(--space)) 0 calc(20px * var(--space));
+}
+
+.filterbar__chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+  transition: all .15s;
+  text-decoration: none;
+
+  &:hover { border-color: var(--border-strong); color: var(--ink); }
+  &.is-active { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+}
+
+/* ============================================================
+   SEARCH MODAL
+   ============================================================ */
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  background: rgba(12, 11, 8, .62);
+  backdrop-filter: blur(4px);
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 13vh;
+
+  .site[data-theme="dark"] & { background: rgba(0, 0, 0, .7); }
+  &.open { display: flex; }
+}
+
+.search-modal {
+  width: min(580px, 92vw);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  box-shadow: 0 30px 80px -24px rgba(0, 0, 0, .55), 0 2px 6px rgba(0, 0, 0, .12);
+  overflow: hidden;
+}
+
+.search-modal__input {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+
+  input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    &::placeholder { color: var(--faint); }
+  }
+
+  kbd {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 3px 7px;
+    border-radius: 6px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+}
+
+.search-modal__icon { color: var(--muted); display: grid; svg { width: 18px; height: 18px; } }
+
+.search-modal__results { max-height: 52vh; overflow: auto; padding: 8px; }
+
+.search-hit {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 13px;
+  border-radius: 9px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:hover, &.sel { background: var(--surface-2); border-color: var(--border); }
+}
+
+.search-hit__title { font-family: var(--serif); font-size: 17px; font-weight: 500; color: var(--ink); }
+.search-hit__meta  { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.search-empty      { padding: 30px; text-align: center; color: var(--faint); font-size: 15px; }
+
+.search-modal__foot {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 10px 16px;
+  border-top: 1px solid var(--border);
+  background: var(--surface-2);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+
+  kbd {
+    font-size: 10.5px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    margin-right: 4px;
+  }
+}
+
+/* ============================================================
+   TAGS — /tags cloud + /tags/<tag> single
+   ============================================================ */
+.tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 8px;
+
+  a {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 9px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all .15s;
+    &:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+  }
+}
+
+.tagcloud__name  { font-family: var(--mono); font-size: 14px; color: var(--ink); &::before { content: "#"; color: var(--accent); } }
+.tagcloud__count { font-family: var(--mono); font-size: 12px; color: var(--faint); }
+
+/* ============================================================
+   PROJECTS — two-column card grid
+   ============================================================ */
+.projects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding-top: 8px;
+}
+
+@media (max-width: 640px) { .projects { grid-template-columns: 1fr; } }
+
+.project {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  border-radius: 13px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: all .18s;
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px -22px rgba(0, 0, 0, .4);
+  }
+}
+
+.project__head { display: flex; align-items: center; gap: 9px; }
+.project__icon { color: var(--muted); display: grid; svg { width: 18px; height: 18px; } }
+.project__name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); }
+.project__desc { font-size: 16px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
+.project__meta {
+  display: flex;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--faint);
+  margin-top: 2px;
+  span { display: inline-flex; align-items: center; gap: 5px; }
+  svg { width: 13px; height: 13px; }
+}
+
+/* ============================================================
+   PUBLICATIONS
+   ============================================================ */
+.pub {
+  padding: 22px 0;
+  border-top: 1px solid var(--border);
+  &:first-of-type { border-top: 0; }
+}
+
+.pub__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.pub__title { font-family: var(--serif); font-size: 21px; font-weight: 600; color: var(--ink); line-height: 1.3; }
+.pub__venue { font-family: var(--mono); font-size: 12px; color: var(--faint); white-space: nowrap; flex: none; }
+.pub__note  { font-size: 16.5px; color: var(--ink-soft); margin: 6px 0 0; line-height: 1.55; }
+
+.pub__links {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+
+  a {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    padding: 4px 11px;
+    border-radius: 7px;
+    border: 1px solid var(--border);
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: all .15s;
+    &:hover { border-color: var(--accent-line); color: var(--ink); background: var(--accent-soft); }
+  }
+}
+
+/* ============================================================
+   404
+   ============================================================ */
+.notfound {
+  text-align: center;
+  padding: calc(70px * var(--space)) 0;
+}
+
+.notfound__code { font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .05em; }
+
+.notfound h1 { font-family: var(--serif); font-size: 40px; font-weight: 600; margin: 14px 0 0; color: var(--ink); }
+.notfound p  { font-size: 18px; color: var(--muted); margin: 12px 0 24px; }

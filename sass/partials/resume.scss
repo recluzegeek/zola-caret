@@ -1,0 +1,163 @@
+/* ==========================================================================
+   _resume.scss — CV / resume page
+   ========================================================================== */
+
+.resume {
+  padding: calc(30px * var(--space)) 0 0;
+}
+
+.resume__head {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+
+  h1 {
+    font-family: var(--serif);
+    font-size: 38px;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    margin: 0;
+    color: var(--ink);
+  }
+}
+
+.resume__role {
+  font-size: 18px;
+  color: var(--muted);
+  margin: 6px 0 0;
+}
+
+.resume__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+
+  a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    &:hover { color: var(--accent); }
+    svg { width: 14px; height: 14px; }
+  }
+}
+
+.resume__dl {
+  margin-left: auto;
+
+  a {
+    padding: 5px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    color: var(--ink);
+    &:hover { background: var(--accent-soft); border-color: var(--accent-line); }
+  }
+}
+
+/* ---- CV section grid ---- */
+.cv-sec {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--border);
+  &:last-child { border-bottom: 0; }
+}
+
+.cv-sec__label {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: .04em;
+  text-transform: lowercase;
+  color: var(--muted);
+  padding-top: 4px;
+  &::before { content: "# "; color: var(--faint); }
+}
+
+@media (max-width: 680px) {
+  .cv-sec { grid-template-columns: 1fr; gap: 12px; }
+}
+
+/* ---- CV entry ---- */
+.cv-item { margin-bottom: 24px; &:last-child { margin-bottom: 0; } }
+
+.cv-item__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cv-item__role { font-family: var(--serif); font-size: 19px; font-weight: 600; color: var(--ink); }
+.cv-item__org  { color: var(--muted); font-weight: 400; }
+.cv-item__date { font-family: var(--mono); font-size: 12px; color: var(--faint); flex: none; white-space: nowrap; }
+
+.cv-bullets {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  font-size: 16.5px;
+  line-height: 1.6;
+  li { margin: 5px 0; }
+}
+
+.cv-note { font-size: 16.5px; color: var(--ink-soft); margin: 4px 0 0; }
+
+/* Status badge: published / in review */
+.cv-status {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 5px;
+  margin-left: 8px;
+  vertical-align: 1px;
+  border: 1px solid var(--border-strong);
+  color: var(--muted);
+  &.is-pub { background: var(--accent-soft); border-color: var(--accent-line); color: var(--ink); }
+}
+
+/* ---- Skills ---- */
+.skillgrp { margin-bottom: 22px; &:last-child { margin-bottom: 0; } }
+
+.skillgrp__head {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+
+.skillgrp ul { list-style: none; margin: 0; padding: 0; }
+
+.skillgrp li {
+  display: flex;
+  gap: 11px;
+  padding: 5px 0;
+  font-size: 16.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+
+  .mk { flex: none; color: var(--faint); font-family: var(--mono); font-size: 12px; line-height: 1.65; }
+}
+
+.skillgrp--drivers .skillgrp__items { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+/* Tag pill (skills page) */
+.tag {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 4px 11px;
+  border-radius: 7px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--ink-soft);
+}
+
+.taglist { display: flex; flex-wrap: wrap; gap: 7px; }

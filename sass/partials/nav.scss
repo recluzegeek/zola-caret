@@ -1,0 +1,127 @@
+/* ==========================================================================
+   _nav.scss — Site navigation
+   Uses the mono "machine layer" for brand + links.
+   ========================================================================== */
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 22px 28px;
+}
+
+.nav__brand {
+  font-family: var(--mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+
+  .tilde { color: var(--accent); }
+  &:hover .tilde { opacity: .7; }
+}
+
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  a {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .15s;
+    cursor: pointer;
+
+    &:hover    { color: var(--ink); }
+    &.is-active { color: var(--accent); }
+  }
+}
+
+.nav__tools {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+/* Search trigger button */
+.searchbtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 33px;
+  padding: 0 9px 0 11px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all .15s;
+
+  &:hover {
+    color: var(--ink);
+    border-color: var(--border-strong);
+    background: var(--surface-2);
+  }
+
+  kbd {
+    font-size: 11px;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--faint);
+  }
+}
+
+/* Icon button (theme toggle) */
+.iconbtn {
+  width: 33px;
+  height: 33px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all .15s;
+
+  &:hover {
+    color: var(--ink);
+    border-color: var(--border-strong);
+    background: var(--surface-2);
+  }
+
+  svg { width: 16px; height: 16px; }
+
+  /* Show the right icon per theme */
+  .ico-sun, .ico-moon { display: none; }
+}
+.site[data-theme="light"] .iconbtn .ico-moon { display: block; }
+.site[data-theme="dark"]  .iconbtn .ico-sun  { display: block; }
+
+/* Footer */
+.foot {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: calc(40px * var(--space)) 28px calc(50px * var(--space));
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 12px;
+
+  a { color: var(--muted); text-decoration: none; }
+  a:hover { color: var(--accent); }
+}

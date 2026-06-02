@@ -1,157 +1,251 @@
 # ============================================================
-# Caret — example site config for msidev.pk
-# Edit everything about "you" here; templates read from it.
+# config.toml — Caret theme configuration
+#
+# HOW THIS FILE IS ORGANISED
+# ─────────────────────────────────────────────────────────────
+# Section 1 · Zola core settings
+# Section 2 · [extra] — all flat keys MUST come before any
+#             [extra.*] sub-table (TOML rule: you cannot reopen
+#             a table once a sub-table has been declared)
+# Section 3 · [extra.identity] sub-table
+# Section 4 · [[extra.nav]] entries
+# Section 5 · [[extra.socials]] entries
+# Section 6 · [[extra.terminal]] entries
+# Section 7 · [[extra.experience]] entries
+# Section 8 · [[extra.education]] entries
+# Section 9 · [[extra.skills]] entries
+# Section 10 · [[extra.projects]] entries
+# Section 11 · [[extra.publications]] entries
+#
+# Zola docs: https://www.getzola.org/documentation/getting-started/configuration/
 # ============================================================
-base_url = "https://msidev.pk"
-title = "msidev.pk"
-description = "Software engineer — writing about computer vision, Linux, and building things."
+
+
+# ── Section 1: Zola core ────────────────────────────────────
+
+base_url         = "https://msidev.pk"
+title            = "msidev.pk"
+description      = "Software engineer — writing about computer vision, Linux, and building things."
 default_language = "en"
 
-compile_sass = true
-build_search_index = false   # Caret embeds its own lightweight search index (see base.html)
-generate_feeds = true
-feed_filenames = ["atom.xml"]
+compile_sass       = true
+build_search_index = false   # Caret uses its own lightweight client-side search
+generate_feeds     = true
+feed_filenames     = ["atom.xml"]
 
 taxonomies = [
   { name = "tags", feed = true },
 ]
 
 [markdown.highlighting]
-theme = "houston"
-# To turn on syntax highlighting later:
-#   highlight_code = true
-#   highlight_theme = "css"   # then add the generated syntax-theme.css
+theme = "github-dark"             # available themes: https://github.com/getzola/giallo?tab=readme-ov-file#themes
 
-# ============================================================
+
+# ── Section 2: [extra] flat keys ────────────────────────────
+# ALL flat extra.* keys must live here, before any [extra.*]
+# sub-table. TOML does not allow reopening a table.
+
 [extra]
-default_theme = "light"          # "light" or "dark"
+default_theme = "dark"   # "light" or "dark" — user toggle persists in localStorage
+
+# Your role lines
 eyebrow = "software engineer"
+role    = "Associate Software Engineer — Python · TypeScript · computer vision · cloud"
+
+# Contact — used on the resume page
 email = "hello@msidev.pk"
-role = "Associate Software Engineer — Python · TypeScript · computer vision · cloud"
+
+# Footer link
 theme_repo = "https://github.com/recluzegeek/zola-caret"
-# goatcounter_code = "yourcode"  # uncomment to enable GoatCounter analytics
+
+# Uncomment to show a PDF download link on the resume page
 # resume_pdf = "/resume.pdf"
-# --- Giscus comments (uncomment + fill from giscus.app to enable on posts) ---
-# giscus_repo = "recluzegeek/blog-comments"
-# giscus_repo_id = "R_xxx"
-# giscus_category = "General"
-# giscus_category_id = "DIC_xxx"
 
-bio = "I build with Python, TypeScript and Next.js, spend a lot of time around <a href=\"/resume\">computer vision</a>, optimization and the cloud, and run a deliberately minimal Linux setup. This is where I write about what I’m learning — and the odd FOSS rabbit hole."
+# Homepage bio — HTML is allowed.
+# Triple single-quotes (TOML multi-line literal string) let you freely use
+# both double quotes (for HTML attributes) and apostrophes without any escaping.
+bio = '''I build with Python, TypeScript and Next.js, spend a lot of time around <a href="/resume">computer vision</a>, optimization and the cloud, and run a deliberately minimal Linux setup. This is where I write about what I'm learning — and the odd FOSS rabbit hole.'''
 
-skills = [
-  { label = "engineering", items = [
-    "Confident Python & TypeScript development",
-    "Full-stack apps with Next.js + Supabase",
-    "End-to-end testing with Playwright-Python",
-    "Occasional Java, Bash & SQL",
-    "Linux (Arch · i3 · dwm) & KVM/QEMU virtualization",
-  ] },
-  { label = "working with people", items = [
-    "A drive to keep learning and sharpen my own craft",
-    "Communicates clearly; gives and asks for feedback",
-    "Open to constructive criticism and change",
-  ] },
-]
+# Daily drivers — rendered as a single mono line on the resume
 tools = ["Neovim", "VS Code", "Git", "DBeaver", "Docker", "Claude Code"]
 
-[extra.identity]
-logo = "msi"
-prompt = "msi"
-name = "Salman"
+# ── Analytics & comments (all optional — leave commented to disable) ──
 
-[[extra.terminal]]
-cmd = "whoami"
-out = "software engineer · computer vision · cloud · linux"
-[[extra.terminal]]
-cmd = "cat now.txt"
-out = "learning in the open, shipping small things, helping out in FOSS & non-profits."
+# GoatCounter: create account at https://www.goatcounter.com/
+# then set this to your subdomain (e.g. "mysite" for mysite.goatcounter.com)
+# goatcounter_code = "yourcode"
+
+# Giscus comments: https://giscus.app/
+# 1. Enable Discussions on a GitHub repo
+# 2. Install the giscus app and copy the generated IDs
+# giscus_repo         = "yourname/blog-comments"
+# giscus_repo_id      = "R_xxx"
+# giscus_category     = "General"
+# giscus_category_id  = "DIC_xxx"
+
+
+# ── Section 3: Identity sub-table ───────────────────────────
+# Controls ~/logo in nav, terminal prompt, and hero greeting.
+# Sub-tables must come AFTER all flat [extra] keys above.
+
+[extra.identity]
+logo   = "msi"     # text after ~/  in the nav brand
+prompt = "msi"     # left side of terminal prompt: msi@msidev ~ $
+name   = "Salman"  # used in hero: "Hey, I'm {name}."
+
+
+# ── Section 4: Navigation ────────────────────────────────────
+# Each entry = one link in the nav bar.
+# route must match a content file or section (no leading slash).
 
 [[extra.nav]]
 route = "writings"
 label = "writings"
+
 [[extra.nav]]
 route = "projects"
 label = "projects"
+
 [[extra.nav]]
 route = "publications"
 label = "publications"
+
 [[extra.nav]]
 route = "resume"
 label = "resume"
 
+
+# ── Section 5: Social links ──────────────────────────────────
+# Shown on homepage hero and resume page.
+# icon must be registered in templates/macros/icons.html.
+
 [[extra.socials]]
 label = "github"
-icon = "github"
-href = "https://github.com/recluzegeek"
+icon  = "github"
+href  = "https://github.com/recluzegeek"
+
 [[extra.socials]]
 label = "linkedin"
-icon = "linkedin"
-href = "#"
-[[extra.socials]]
-label = "reddit"
-icon = "reddit"
-href = "#"
+icon  = "linkedin"
+href  = "https://linkedin.com/in/recluzegeek"
+
+# [[extra.socials]]
+# label = "reddit"
+# icon  = "reddit"
+# href  = "#"
+
+
+# ── Section 6: Terminal block ────────────────────────────────
+# Each entry = one command/output pair on the homepage.
+
+[[extra.terminal]]
+cmd = "whoami"
+out = "software engineer · computer vision · cloud · linux"
+
+[[extra.terminal]]
+cmd = "cat now.txt"
+out = "learning in the open, shipping small things, helping out in FOSS & non-profits."
+
+
+# ── Section 7: Experience ────────────────────────────────────
 
 [[extra.experience]]
-role = "Associate Software Engineer"
-org = "[Company]"
-date = "2024 — present"
+role  = "Associate Software Engineer"
+org   = "[Company]"
+date  = "2024 — present"
 bullets = [
   "Build and ship product features across a Next.js + Supabase stack used in production.",
   "Own end-to-end test coverage with Playwright-Python; cut flaky-test noise and CI time.",
   "Model and tune MySQL/PostgreSQL schemas; debug and profile with DBeaver.",
 ]
+
 [[extra.experience]]
-role = "Open-source contributor"
-org = "FOSS & non-profits"
-date = "ongoing"
+role  = "Open-source contributor"
+org   = "FOSS & non-profits"
+date  = "ongoing"
 bullets = [
   "Maintain a Java project (50★ / 16 forks) and contribute fixes to tools I use daily.",
 ]
 
+
+# ── Section 8: Education ─────────────────────────────────────
+
 [[extra.education]]
 role = "Graduate Studies, Computer Science"
-org = "GIFT University"
+org  = "XYZ University"
 date = "—"
 note = "Focus areas: computer vision, optimization, cloud & virtualization (KVM/QEMU)."
 
+
+# ── Section 9: Skills ────────────────────────────────────────
+
+[[extra.skills]]
+label = "engineering"
+items = [
+  "Confident Python & TypeScript development",
+  "Full-stack apps with Next.js + Supabase",
+  "End-to-end testing with Playwright-Python",
+  "Occasional Java, Bash & SQL",
+  "Linux (Arch · i3 · dwm) & KVM/QEMU virtualization",
+]
+
+[[extra.skills]]
+label = "working with people"
+items = [
+  "A drive to keep learning and sharpen my own craft",
+  "Communicates clearly; gives and asks for feedback",
+  "Open to constructive criticism and change",
+]
+
+
+# ── Section 10: Projects ─────────────────────────────────────
+# icon must match a name in templates/macros/icons.html.
+
 [[extra.projects]]
-name = "[Project name]"
-icon = "github"
-desc = "A Java tool from before the AI era — still my most-starred repo and the one people fork most."
-href = "https://github.com/recluzegeek"
+name  = "[Project name]"
+icon  = "github"
+desc  = "A Java tool from before the AI era — still my most-starred repo and the one people fork most."
+href  = "https://github.com/recluzegeek"
 stars = 50
 forks = 16
+
 [[extra.projects]]
 name = "dotfiles"
 icon = "terminal"
 desc = "Arch + i3 / dwm config: keybinds, status bar, and the scripts that hold it together."
 href = "#"
 
+
+# ── Section 11: Publications ─────────────────────────────────
+# status: "published" → coloured badge; anything else → neutral badge.
+# links: optional array of { label, href }.
+
 [[extra.publications]]
-title = "[Paper title]"
-venue = "IEEE · 2025"
+title  = "[Paper title]"
+venue  = "IEEE · 2025"
 status = "published"
-note = "Deepfake detection. Presented as a conference talk."
+note   = "Deepfake detection. Presented as a conference talk."
+
 [[extra.publications.links]]
 label = "doi"
-href = "#"
+href  = "#"
+
 [[extra.publications.links]]
 label = "pdf"
-href = "#"
+href  = "#"
+
 [[extra.publications.links]]
 label = "slides"
-href = "#"
+href  = "#"
 
 [[extra.publications]]
-title = "[Paper title]"
-venue = "Journal · 2026"
+title  = "[Paper title]"
+venue  = "Journal · 2026"
 status = "in review"
-note = "Deepfake detection."
+note   = "Deepfake detection."
 
 [[extra.publications]]
-title = "[Paper title]"
-venue = "Journal · 2026"
+title  = "[Paper title]"
+venue  = "Journal · 2026"
 status = "in review"
-note = "Deepfake detection."
+note   = "Deepfake detection."

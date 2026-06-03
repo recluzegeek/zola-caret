@@ -5,7 +5,7 @@ Newsreader for everything you read; JetBrains Mono as a deliberate accent for th
 
 The name is the blinking terminal cursor *and* the proofreader's insertion mark — the theme's two halves.
 
-**Features:** neutral warm-gray palette + one configurable accent · light/dark toggle · client-side search · year-grouped archive · tags · projects · publications · resume page · GoatCounter analytics · Giscus comments.
+**Features:** neutral warm-gray palette + one configurable accent · light/dark toggle · client-side search · year-grouped archive · tags · publications · resume page · GoatCounter analytics · Giscus comments.
 
 ## Quick start
 
@@ -38,7 +38,7 @@ bio     = "I build …"           # paragraph below the heading, HTML ok
 
 **Step 3 — Add your nav links and socials** (Sections 5 & 6)
 
-The default nav (writings, projects, publications, resume) matches the included pages. Remove any `[[extra.nav]]` entry for a page you don't want.
+The default nav (writings, publications, resume) matches the included pages. Remove any `[[extra.nav]]` entry for a page you don't want.
 
 **Step 4 — Write your first post**
 
@@ -64,7 +64,6 @@ Write in Markdown here. `## Headings` populate the table of contents automatical
 **Step 5 — Fill in your data pages**
 
 - **Resume** — edit `[[extra.experience]]`, `[[extra.education]]`, `[[extra.skills]]`, and `tools` in `config.toml` Section 8.
-- **Projects** — edit `[[extra.projects]]` in Section 9. Each entry becomes a card.
 - **Publications** — edit `[[extra.publications]]` in Section 10.
 
 **Step 6 — Choose a font strategy** (optional)
@@ -80,25 +79,23 @@ content/
   writings/
     _index.md            archive settings (sort_by = "date")
     *.md                 one file per post
-  projects.md            projects page  (data in config.toml § 9)
   publications.md        publications   (data in config.toml § 10)
   resume.md              resume         (data in config.toml § 8)
 sass/
   style.scss             imports only — edit the partials, not this file
   partials/
-    _tokens.scss         @font-face + all CSS custom properties  ← retheme here
-    _base.scss           reset, .wrap, .btn
-    _nav.scss            navigation, footer, theme toggle, search button
-    _hero.scss           hero, terminal block, social links, post rows
-    _article.scss        reading view, TOC, prose, code blocks
-    _resume.scss         CV layout, skill groups
-    _pages.scss          archive, search modal, tags, projects, publications, 404
+    tokens.scss         @font-face + all CSS custom properties  ← retheme here
+    base.scss           reset, .wrap, .btn
+    nav.scss            navigation, footer, theme toggle, search button
+    hero.scss           hero, terminal block, social links, post rows
+    article.scss        reading view, TOC, prose, code blocks
+    resume.scss         CV layout, skill groups
+    pages.scss          archive, search modal, tags, publications, 404
 templates/
   base.html              shell: nav, footer, search modal
   index.html             home
   page.html              single post (TOC, prev/next, comments)
   section.html           writings archive (year-grouped + tag filter)
-  projects.html
   publications.html
   resume.html
   taxonomy_list.html     /tags cloud
@@ -108,8 +105,7 @@ templates/
     icons.html           SVG icon registry           ← add icons here
     post.html            post row component
     cv.html              resume entry component
-    project.html         project card component
-    pub.html             publication entry component
+    publications.html             publication entry component
     ui.html              compatibility shim (re-exports all macros)
 static/
   fonts/                 self-hosted woff2 files
@@ -243,7 +239,6 @@ All macros are importable individually or via the backward-compatible `ui.html` 
 {% import "macros/post.html"    as post    %}
 {% import "macros/icons.html"   as icons   %}
 {% import "macros/cv.html"      as cv      %}
-{% import "macros/project.html" as project %}
 {% import "macros/pub.html"     as pub     %}
 
 {{ post::row(page=page, dek=true) | safe }}
@@ -255,8 +250,7 @@ All macros are importable individually or via the backward-compatible `ui.html` 
 | `icons.html` | `icon(name)` | `name` — registered icon name |
 | `post.html` | `row(page, dek)` | `page` — Zola page · `dek` bool |
 | `cv.html` | `item(role, org, date, bullets, note, status)` | all optional except `role` |
-| `project.html` | `card(p)` | `p` — project object from config |
-| `pub.html` | `item(p)` | `p` — publication object from config |
+| `publications.html` | `item(p)` | `p` — publication object from config |
 
 ## Converting this into a reusable theme
 
@@ -291,7 +285,6 @@ See [Zola theme documentation](https://www.getzola.org/documentation/themes/over
 | `[[extra.education]]` | array | Resume education: `role`, `org`, `date`, `note` |
 | `[[extra.skills]]` | array | Resume skills: `label`, `items` |
 | `tools` | array of strings | Daily drivers line on resume |
-| `[[extra.projects]]` | array | Project cards: `name`, `desc`, `href`, `icon`, `stars`, `forks` |
 | `[[extra.publications]]` | array | Publications: `title`, `venue`, `status`, `note`, `links` |
 
 ## Roadmap

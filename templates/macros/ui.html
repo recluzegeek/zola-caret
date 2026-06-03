@@ -13,19 +13,16 @@
      macros/icons.html   → ui::icon()
      macros/post.html    → ui::post_row()
      macros/cv.html      → ui::cv_item()
-     macros/project.html → ui::project_card()
      macros/pub.html     → ui::pub_item()
    ============================================================ #}
 
 {% import "macros/icons.html"   as _icons   %}
 {% import "macros/post.html"    as _post    %}
 {% import "macros/cv.html"      as _cv      %}
-{% import "macros/project.html" as _project %}
 {% import "macros/publications.html"     as _pub     %}
 
 {# Re-export under the original names #}
 {% macro icon(name)                                          %}{{ _icons::icon(name=name) | safe }}{% endmacro %}
 {% macro post_row(page, dek=false)                          %}{{ _post::row(page=page, dek=dek) | safe }}{% endmacro %}
 {% macro cv_item(role, org="", date="", bullets=false, note="", status="") %}{{ _cv::item(role=role, org=org, date=date, bullets=bullets, note=note, status=status) | safe }}{% endmacro %}
-{% macro project_card(p)                                    %}{{ _project::card(p=p) | safe }}{% endmacro %}
 {% macro pub_item(p)                                        %}{{ _pub::item(p=p) | safe }}{% endmacro %}v

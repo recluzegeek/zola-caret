@@ -14,8 +14,7 @@
 # Section 7 · [[extra.experience]] entries
 # Section 8 · [[extra.education]] entries
 # Section 9 · [[extra.skills]] entries
-# Section 10 · [[extra.projects]] entries
-# Section 11 · [[extra.publications]] entries
+# Section 10 · [[extra.publications]] entries
 #
 # Zola docs: https://www.getzola.org/documentation/getting-started/configuration/
 # ============================================================
@@ -101,10 +100,6 @@ name   = "Salman"  # used in hero: "Hey, I'm {name}."
 [[extra.nav]]
 route = "writings"
 label = "writings"
-
-[[extra.nav]]
-route = "projects"
-label = "projects"
 
 [[extra.nav]]
 route = "publications"
@@ -198,25 +193,7 @@ items = [
 ]
 
 
-# ── Section 10: Projects ─────────────────────────────────────
-# icon must match a name in templates/macros/icons.html.
-
-[[extra.projects]]
-name  = "[Project name]"
-icon  = "github"
-desc  = "A Java tool from before the AI era — still my most-starred repo and the one people fork most."
-href  = "https://github.com/recluzegeek"
-stars = 50
-forks = 16
-
-[[extra.projects]]
-name = "dotfiles"
-icon = "terminal"
-desc = "Arch + i3 / dwm config: keybinds, status bar, and the scripts that hold it together."
-href = "#"
-
-
-# ── Section 11: Publications ─────────────────────────────────
+# ── Section 10: Publications ─────────────────────────────────
 # status: "published" → coloured badge; anything else → neutral badge.
 # links: optional array of { label, href }.
 

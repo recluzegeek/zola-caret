@@ -1,10 +1,10 @@
 /* ==========================================================================
-   _pages.scss — Archive, search modal, tags, projects, publications, 404
+   _pages.scss — Archive, search modal, tags, publications, 404
    Each section is clearly labelled so you can find it quickly.
    ========================================================================== */
 
 /* ============================================================
-   SHARED — page header used on archive, tags, projects, pubs
+   SHARED — page header used on archive, tags, publications
    ============================================================ */
 .page-head {
   padding: calc(36px * var(--space)) 0 calc(20px * var(--space));
@@ -200,51 +200,6 @@
 
 .tagcloud__name  { font-family: var(--mono); font-size: 14px; color: var(--ink); &::before { content: "#"; color: var(--accent); } }
 .tagcloud__count { font-family: var(--mono); font-size: 12px; color: var(--faint); }
-
-/* ============================================================
-   PROJECTS — two-column card grid
-   ============================================================ */
-.projects {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  padding-top: 8px;
-}
-
-@media (max-width: 640px) { .projects { grid-template-columns: 1fr; } }
-
-.project {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  border-radius: 13px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  transition: all .18s;
-  text-decoration: none;
-
-  &:hover {
-    border-color: var(--accent-line);
-    transform: translateY(-2px);
-    box-shadow: 0 14px 36px -22px rgba(0, 0, 0, .4);
-  }
-}
-
-.project__head { display: flex; align-items: center; gap: 9px; }
-.project__icon { color: var(--muted); display: grid; svg { width: 18px; height: 18px; } }
-.project__name { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--ink); }
-.project__desc { font-size: 16px; color: var(--ink-soft); line-height: 1.5; flex: 1; }
-.project__meta {
-  display: flex;
-  gap: 14px;
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--faint);
-  margin-top: 2px;
-  span { display: inline-flex; align-items: center; gap: 5px; }
-  svg { width: 13px; height: 13px; }
-}
 
 /* ============================================================
    PUBLICATIONS

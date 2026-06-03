@@ -15,8 +15,8 @@
                       .codeblock, .copybtn, .comments
      _resume.scss   → .resume, .cv-*, .skillgrp, .tag
      _pages.scss    → .page-head, .archive__year, .filterbar,
-                      search modal, .tagcloud, .projects,
-                      .pub, .notfound
+                      search modal, .tagcloud,
+                      .publications, .notfound
    ============================================================ */
 
 @use 'partials/tokens';

@@ -76,42 +76,97 @@
     window.addEventListener('resize', () => { const i = tocLinks.findIndex(a => a.classList.contains('is-active')); setActive(i < 0 ? 0 : i); });
   }
 
-  /* ---- mobile full-screen menu (open/close + body lock) ---- */
+  /* ---- mobile full-screen menu (open/close + scroll lock) ---- */
   (function () {
     const mfull = document.getElementById('mfull');
     if (!mfull) return;
-    const close = () => { mfull.classList.remove('open'); document.body.style.overflow = ''; };
+    const lock = (on) => {
+      document.documentElement.style.overflow = on ? 'hidden' : '';
+      document.body.style.overflow = on ? 'hidden' : '';
+    };
     document.addEventListener('click', (e) => {
-      if (e.target.closest('[data-menu-open]')) { mfull.classList.add('open'); document.body.style.overflow = 'hidden'; }
-      else if (e.target.closest('[data-menu-close]')) { close(); }
+      if (e.target.closest('[data-menu-open]')) { mfull.classList.add('open'); lock(true); }
+      else if (e.target.closest('[data-menu-close]')) { mfull.classList.remove('open'); lock(false); }
     });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { mfull.classList.remove('open'); lock(false); } });
   })();
 
-  /* ---- search ---- */
+  /* ---- search (filter + up/down navigation) ---- */
   const overlay = document.getElementById('searchOverlay');
   const input = document.getElementById('searchInput');
   const results = document.getElementById('searchResults');
   const DATA = window.__SEARCH || [];
-  function fmt(iso) { try { return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }); } catch (e) { return iso; } }
+  let hitEls = [];
+  let selIdx = 0;
+  
+  function fmt(iso) { 
+    try { return new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }); } 
+    catch (e) { return iso; } 
+  }
+  
+  function paintSel() {
+    if (!hitEls.length) return;
+    hitEls.forEach((el, i) => el.classList.toggle('sel', i === selIdx));
+    const el = hitEls[selIdx];
+    if (!el) return;
+  
+    const top = el.offsetTop, bot = top + el.offsetHeight;
+    if (top < results.scrollTop) results.scrollTop = top;
+    else if (bot > results.scrollTop + results.clientHeight) results.scrollTop = bot - results.clientHeight;
+  }
+  
   function render(q) {
     q = (q || '').trim().toLowerCase();
-    const hits = DATA.filter(p => !q || (p.title + ' ' + (p.tags || []).join(' ') + ' ' + (p.dek || '') + ' ' + (p.body || '')).toLowerCase().includes(q));
+    
+    const hits = DATA.filter(p => {
+      if (!q) return true;
+      const searchTarget = `${p.title} ${(p.tags || []).join(' ')} ${p.dek || ''} ${p.body || ''}`.toLowerCase();
+      return searchTarget.includes(q);
+    });
+  
     results.innerHTML = hits.length
-      ? hits.map((p, i) => '<a class="search-hit' + (i === 0 ? ' sel' : '') + '" href="' + p.url + '"><span class="search-hit__title">' + p.title + '</span><span class="search-hit__meta">' + fmt(p.date) + (p.tags && p.tags.length ? ' · ' + p.tags.map(t => '#' + t).join(' ') : '') + '</span></a>').join('')
-      : '<div class="search-empty">No writings match \u201c' + q + '\u201d.</div>';
+      ? hits.map((p) => {
+          const tagList = p.tags && p.tags.length ? ' · ' + p.tags.map(t => '#' + t).join(' ') : '';
+          const metaText = fmt(p.date) + tagList;
+          return `<a class="search-hit" href="${p.url}"><span class="search-hit__title">${p.title}</span><span class="search-hit__meta">${metaText}</span></a>`;
+        }).join('')
+      : `<div class="search-empty">No writings match \u201c${q}\u201d.</div>`;
+      
+    hitEls = Array.from(results.querySelectorAll('.search-hit'));
+    selIdx = 0;
+    paintSel();
   }
+  
   function open() { overlay.classList.add('open'); render(''); setTimeout(() => input.focus(), 30); }
   function close() { overlay.classList.remove('open'); input.value = ''; }
+  
   document.addEventListener('click', (e) => {
     if (e.target.closest('[data-search]')) open();
     else if (e.target === overlay) close();
     else if (e.target.closest('.search-hit')) close();
   });
+  
   if (input) input.addEventListener('input', () => render(input.value));
+  
   document.addEventListener('keydown', (e) => {
-    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); }
-    if (e.key === 'Escape') close();
-    if (e.key === 'Enter' && overlay.classList.contains('open')) { const sel = results.querySelector('.search-hit'); if (sel) location.href = sel.getAttribute('href'); }
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); return; }
+    if (!overlay || !overlay.classList.contains('open')) return;
+    
+    if (e.key === 'Escape') { close(); }
+    else if (e.key === 'ArrowDown') { 
+      e.preventDefault(); 
+      if (hitEls.length) { selIdx = (selIdx + 1) % hitEls.length; paintSel(); } 
+    }
+    else if (e.key === 'ArrowUp') { 
+      e.preventDefault(); 
+      if (hitEls.length) { selIdx = (selIdx - 1 + hitEls.length) % hitEls.length; paintSel(); } 
+    }
+    else if (e.key === 'Enter') { 
+      e.preventDefault(); 
+      if (hitEls.length > 0) {
+        const el = hitEls[selIdx]; 
+        if (el) location.href = el.getAttribute('href'); 
+      }
+    }
   });
 })();

@@ -66,6 +66,8 @@
   cursor: pointer;
   transition: all .15s;
 
+  svg { width: 15px; height: 15px; flex: none; }
+
   &:hover {
     color: var(--ink);
     border-color: var(--border-strong);
@@ -207,4 +209,6 @@
   .nav__links { display: none; }
   .nav .searchbtn { display: none; }
   .nav__burger { display: grid; }
+  .foot { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .foot__right { flex-wrap: wrap; }
 }

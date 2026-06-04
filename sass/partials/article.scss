@@ -43,14 +43,18 @@
 /* ---- Two-column layout: prose + sticky TOC ---- */
 .layout {
   display: grid;
-  grid-template-columns: 1fr 190px;
+  grid-template-columns: 1fr;           /* single column when there's no TOC */
   gap: 44px;
   align-items: start;
 }
+.layout:has(.toc) { grid-template-columns: 1fr 190px; }
+/* min-width:0 lets a long code line scroll inside its <pre> instead of
+   forcing the grid track wider than the viewport (horizontal overflow). */
+.layout > * { min-width: 0; }
 
 @media (max-width: 780px) {
-  .layout { grid-template-columns: 1fr; }
-  .toc    { display: none; }
+  .layout, .layout:has(.toc) { grid-template-columns: 1fr; }
+  .toc { display: none; }
 }
 
 /* ---- Table of contents ---- */
@@ -89,6 +93,7 @@
   font-size: 19px;
   line-height: 1.72;
   color: var(--ink-soft);
+  overflow-wrap: break-word;
 
   > * { max-width: 64ch; }
 

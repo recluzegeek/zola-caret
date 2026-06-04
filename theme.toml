@@ -1,6 +1,6 @@
 name = "Caret"
 description = "Editorial-serif voice + terminal-mono machine layer. A restrained, neutral + one-accent blog theme for Zola."
-version = "1.0.0"
+version = "1.0.1"
 license = "MIT"
 homepage = "https://msidev.pk"
 min_version = "0.18.0"

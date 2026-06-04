@@ -59,6 +59,12 @@
     <path d="M4 11a9 9 0 0 1 9 9"/>
     <path d="M4 4a16 16 0 0 1 16 16"/>
     <circle cx="5" cy="19" r="1" fill="currentColor" stroke="none"/>
+  {%- elif name == "menu" -%}
+    <path d="M4 7h16M4 12h16M4 17h16"/>
+  {%- elif name == "close" -%}
+    <path d="M6 6l12 12M18 6L6 18"/>
+  {%- elif name == "play" -%}
+    <path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/>
   {%- endif -%}
 </svg>
 {% endmacro icon %}

@@ -27,8 +27,26 @@
     <div class="nav__tools">
       <button class="searchbtn" data-search>search <kbd>⌘K</kbd></button>
       <button class="iconbtn" data-toggle-theme aria-label="Toggle theme">{{ ui::icon(name="sun") | replace(from='<svg', to='<svg class="ico-sun"') | safe }}{{ ui::icon(name="moon") | replace(from='<svg', to='<svg class="ico-moon"') | safe }}</button>
+      <button class="iconbtn nav__burger" data-menu-open aria-label="Open menu">{{ ui::icon(name="menu") | safe }}</button>
     </div>
   </nav>
+
+  {# full-screen mobile menu #}
+  <div class="mfull" id="mfull">
+    <div class="mfull__top">
+      <a class="mfull__brand" href="{{ get_url(path='/') | safe }}" data-menu-close><span class="tilde">~/</span><span>{{ id.logo }}</span></a>
+      <button class="mfull__x" data-menu-close aria-label="Close menu">{{ ui::icon(name="close") | safe }}</button>
+    </div>
+    <nav class="mfull__links">
+      {% for item in config.extra.nav %}
+      <a href="{{ get_url(path=item.route) | safe }}" class="{% if current_path and current_path is starting_with('/' ~ item.route) %}is-active{% endif %}">{{ item.label }}</a>
+      {% endfor %}
+    </nav>
+    <div class="mfull__foot">
+      <button class="searchbtn" data-search data-menu-close>{{ ui::icon(name="search") | safe }} search writings…</button>
+      <button class="iconbtn" data-toggle-theme aria-label="Toggle theme">{{ ui::icon(name="sun") | replace(from='<svg', to='<svg class="ico-sun"') | safe }}{{ ui::icon(name="moon") | replace(from='<svg', to='<svg class="ico-moon"') | safe }}</button>
+    </div>
+  </div>
 
   <main class="wrap {% block wide %}{% endblock wide %}">
     {% block content %}{% endblock content %}
@@ -36,7 +54,7 @@
 
   <footer class="foot">
     <span>© {{ now() | date(format='%Y') }} {{ config.title }}</span>
-    <span>{% block footer_right %}built with <a href="{{ config.extra.theme_repo | safe }}">zola-caret</a>{% endblock footer_right %}</span>
+    <span class="foot__right">{% block footer_right %}built with <a href="{{ config.extra.theme_repo | safe }}">zola-caret</a>{% endblock footer_right %} <a class="foot__rss" href="{{ get_url(path='atom.xml', trailing_slash=false) | safe }}" aria-label="RSS feed" title="RSS feed">{{ ui::icon(name="rss") | safe }}<span>rss</span></a></span>
   </footer>
 
   {# search lives inside .site so it inherits theme tokens #}
@@ -54,7 +72,7 @@
 <script>
 window.__SEARCH = [
 {%- for page in wsec.pages -%}
-{"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}, "date": {{ page.date | json_encode | safe }}, "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | safe }}, "dek": {{ page.extra.dek | default(value="") | json_encode | safe }}}{% if not loop.last %},{% endif %}
+{"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}, "date": {{ page.date | json_encode | safe }}, "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | safe }}, "dek": {{ page.extra.dek | default(value="") | json_encode | safe }}, "body": {{ page.content | striptags | truncate(length=1800) | json_encode | safe }}}{% if not loop.last %},{% endif %}
 {%- endfor -%}
 ];
 </script>

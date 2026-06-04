@@ -1,5 +1,5 @@
 /* ==========================================================================
-   _article.scss — Single post reading view (prose, TOC, code blocks)
+   article.scss — Single post reading view (prose, TOC, code blocks)
    ========================================================================== */
 
 .article {
@@ -177,9 +177,7 @@
   margin: 0;
   padding: 18px 20px;
   overflow: auto;
-  border-radius: 11px;
   background: var(--code-bg);
-  border: 1px solid var(--border);
   font-family: var(--mono);
   font-size: 13px;
   line-height: 1.7;
@@ -218,3 +216,53 @@
   padding-top: 32px;
   border-top: 1px solid var(--border);
 }
+
+/* ---- Images & video: soft floating shadow + serif-italic caption ---- */
+.prose figure { margin: 30px 0; text-align: center; }
+.prose figure img,
+.prose p > img {
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 1px 3px rgba(20, 20, 22, .04), 0 12px 26px -18px rgba(20, 20, 22, .22);
+}
+.site[data-theme="dark"] .prose figure img,
+.site[data-theme="dark"] .prose p > img { box-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 14px 30px -18px rgba(0, 0, 0, .55); }
+.prose figcaption { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--muted); margin-top: 13px; line-height: 1.5; }
+.prose figure.wide { width: min(1000px, 92vw); max-width: none; margin-left: 50%; transform: translateX(-50%); }
+
+.prose .vidfig { margin: 30px 0; text-align: center; }
+.prose .vid {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #0c0c0c;
+  box-shadow: 0 1px 3px rgba(20, 20, 22, .04), 0 12px 26px -18px rgba(20, 20, 22, .22);
+}
+.prose .vid video { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- Prose tables ---- */
+.prose table { width: 100%; border-collapse: collapse; margin: 0 0 22px; font-size: 16px; }
+.prose thead th { text-align: left; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 500; padding: 0 14px 9px; border-bottom: 1px solid var(--border-strong); }
+.prose tbody td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--ink-soft); }
+.prose tbody tr:last-child td { border-bottom: 0; }
+
+/* ---- TOC animated sliding indicator ----
+   The per-link border-left provides a faint full-height track;
+   .toc__bar is the accent indicator that slides to the active item. */
+.toc nav { position: relative; }
+.toc__bar {
+  position: absolute;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  top: 0;
+  height: 0;
+  opacity: 0;
+  transition: top .26s cubic-bezier(.4, 0, .2, 1), height .26s cubic-bezier(.4, 0, .2, 1), opacity .2s ease;
+}
+.toc a.is-active { border-left-color: var(--border); color: var(--accent); }
+@media (prefers-reduced-motion: reduce) { .toc__bar { transition: none; } }

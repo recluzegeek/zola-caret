@@ -5,7 +5,7 @@ Newsreader for everything you read; JetBrains Mono as a deliberate accent for th
 
 The name is the blinking terminal cursor *and* the proofreader's insertion mark — the theme's two halves.
 
-**Features:** neutral warm-gray palette + one configurable accent · light/dark toggle · client-side search · year-grouped archive · tags · publications · resume page · GoatCounter analytics · Giscus comments.
+**Features:** neutral warm-gray palette + one configurable accent · light/dark toggle · client-side search (titles, tags **and post content**) · year-grouped archive · tags · publications page with thumbnails · resume page · `figure` & `video` shortcodes · full-screen mobile menu · animated table-of-contents indicator · RSS · GoatCounter analytics · Giscus comments.
 
 ## Quick start
 
@@ -107,9 +107,12 @@ templates/
     cv.html              resume entry component
     publications.html             publication entry component
     ui.html              compatibility shim (re-exports all macros)
+  shortcodes/
+    figure.html          captioned image, soft shadow, optional wide=true
+    video.html           self-hosted <video> player with the same shadow
 static/
   fonts/                 self-hosted woff2 files
-  js/theme.js            theme toggle · code copy · TOC scroll-spy · search
+  js/theme.js            theme toggle · code copy · TOC indicator · menu · search
 ```
 
 ## How to…
@@ -128,6 +131,23 @@ tags = ["tag1", "tag2"]
 dek = "One-line deck shown in lists and search."
 +++
 ```
+
+### Add an image or video to a post
+
+Use the bundled shortcodes inside any Markdown post:
+
+```markdown
+Captioned image (column width):
+{{/* figure(src="/writings/diagram.png", caption="What this shows.") */}}
+
+Wide / full-bleed image (breaks past the reading column):
+{{/* figure(src="/writings/wide.png", caption="A big diagram.", wide=true) */}}
+
+Self-hosted video with a poster frame:
+{{/* video(src="/writings/demo.mp4", poster="/writings/demo.jpg", caption="A short clip.") */}}
+```
+
+Both float on a soft shadow with a serif-italic caption. Drop the media files in `static/writings/` (or point `src` at any URL). A plain Markdown `![alt](src)` image is styled the same way.
 
 ### Add a tag
 
@@ -168,17 +188,6 @@ Edit `--accent` in `sass/partials/_tokens.scss`. Everything derives from it:
 ### Change fonts
 
 Edit `--serif` and `--mono` at the bottom of `sass/partials/_tokens.scss`, and update the `@font-face` blocks (or Google Fonts `<link>` in `base.html`) to match.
-
-### Enable syntax highlighting
-
-In `config.toml`:
-```toml
-[markdown]
-highlight_code  = true
-highlight_theme = "css"
-```
-
-Run `zola build`. Zola outputs `syntax-theme.css` — reference it from `base.html`. See [Zola syntax highlighting docs](https://www.getzola.org/documentation/content/syntax-highlighting/).
 
 ### Enable GoatCounter analytics
 
@@ -239,7 +248,7 @@ All macros are importable individually or via the backward-compatible `ui.html` 
 {% import "macros/post.html"    as post    %}
 {% import "macros/icons.html"   as icons   %}
 {% import "macros/cv.html"      as cv      %}
-{% import "macros/pub.html"     as pub     %}
+{% import "macros/publications.html" as pub %}
 
 {{ post::row(page=page, dek=true) | safe }}
 {{ icons::icon(name="github") | safe }}
@@ -285,7 +294,7 @@ See [Zola theme documentation](https://www.getzola.org/documentation/themes/over
 | `[[extra.education]]` | array | Resume education: `role`, `org`, `date`, `note` |
 | `[[extra.skills]]` | array | Resume skills: `label`, `items` |
 | `tools` | array of strings | Daily drivers line on resume |
-| `[[extra.publications]]` | array | Publications: `title`, `venue`, `status`, `note`, `links` |
+| `[[extra.publications]]` | array | Publications: `title`, `venue`, `status`, `badge`, `authors`, `note`, `image`, `links` |
 
 ## Roadmap
 
@@ -294,7 +303,6 @@ These are planned improvements in rough priority order. PRs welcome.
 ### Near-term (quality)
 
 - **Open Graph tags** — `og:title`, `og:description`, `og:image` in `base.html` for better link previews
-- **RSS link in footer** — the feed is already generated; just needs a visible link
 - **`prefers-color-scheme` default** — respect the OS preference before localStorage is set
 - **Archive pagination** — currently all posts render at once; Zola's `paginate_by` makes this straightforward
 

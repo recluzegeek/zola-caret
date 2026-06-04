@@ -194,14 +194,25 @@ items = [
 
 
 # ── Section 10: Publications ─────────────────────────────────
-# status: "published" → coloured badge; anything else → neutral badge.
-# links: optional array of { label, href }.
+# status:  "published" / "peer-reviewed" → filled accent badge;
+#          anything else → neutral outline badge.
+# badge:   optional label override for the published badge.
+# authors: optional byline (HTML allowed; wrap your own name in
+#          <span class="me">…</span> to emphasise it).
+# image:   optional thumbnail shown on the right. Use a local path
+#          like "/publications/foo.png" (drop the file in static/),
+#          or any URL. Omit it and the entry spans full width.
+# links:   optional array of { label, href } — MUST come last in the
+#          entry (TOML: scalar keys cannot follow a sub-table).
 
 [[extra.publications]]
-title  = "[Paper title]"
-venue  = "IEEE · 2025"
-status = "published"
-note   = "Deepfake detection. Presented as a conference talk."
+title   = "[Paper title]"
+venue   = "IEEE · 2025"
+status  = "published"
+badge   = "peer-reviewed"
+authors = '<span class="me">M. Salman Ilyas</span>, A. Collaborator, and R. Advisor'
+note    = "Deepfake detection. Presented as a conference talk."
+image   = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80&auto=format&fit=crop"
 
 [[extra.publications.links]]
 label = "doi"
@@ -216,13 +227,16 @@ label = "slides"
 href  = "#"
 
 [[extra.publications]]
-title  = "[Paper title]"
-venue  = "Journal · 2026"
-status = "in review"
-note   = "Deepfake detection."
+title   = "[Paper title]"
+venue   = "Journal · 2026"
+status  = "in review"
+authors = '<span class="me">M. Salman Ilyas</span>, et al.'
+note    = "Deepfake detection."
+image   = "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80&auto=format&fit=crop"
 
 [[extra.publications]]
-title  = "[Paper title]"
-venue  = "Journal · 2026"
-status = "in review"
-note   = "Deepfake detection."
+title   = "[Paper title]"
+venue   = "Journal · 2026"
+status  = "in review"
+authors = '<span class="me">M. Salman Ilyas</span>'
+note    = "Deepfake detection."

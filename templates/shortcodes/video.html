@@ -1,0 +1,23 @@
+{# ============================================================
+   shortcodes/video.html — self-hosted video player (soft shadow)
+
+   Usage in Markdown:
+     {{ video(src="/writings/demo.mp4") }}
+     {{ video(src="…", poster="/writings/poster.jpg", caption="…") }}
+
+   Args:
+     src     — mp4/webm path/URL (required)
+     poster  — poster image shown before play (optional)
+     caption — serif-italic caption below (optional)
+   ============================================================ #}
+{%- set cap = caption | default(value="") -%}
+{%- set pos = poster | default(value="") -%}
+<figure class="vidfig">
+  <div class="vid">
+    <video controls preload="none"{% if pos %} poster="{{ pos }}"{% endif %}>
+      <source src="{{ src }}">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+  {% if cap %}<figcaption>{{ cap | safe }}</figcaption>{% endif %}
+</figure>

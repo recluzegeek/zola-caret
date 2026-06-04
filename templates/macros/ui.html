@@ -25,4 +25,4 @@
 {% macro icon(name)                                          %}{{ _icons::icon(name=name) | safe }}{% endmacro %}
 {% macro post_row(page, dek=false)                          %}{{ _post::row(page=page, dek=dek) | safe }}{% endmacro %}
 {% macro cv_item(role, org="", date="", bullets=false, note="", status="") %}{{ _cv::item(role=role, org=org, date=date, bullets=bullets, note=note, status=status) | safe }}{% endmacro %}
-{% macro pub_item(p)                                        %}{{ _pub::item(p=p) | safe }}{% endmacro %}v
+{% macro pub_item(p)                                        %}{{ _pub::item(p=p) | safe }}{% endmacro %}

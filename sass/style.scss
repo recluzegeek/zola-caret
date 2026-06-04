@@ -6,15 +6,15 @@
    are defined before any partial references them.
 
    Partial map:
-     _tokens.scss   → @font-face + all CSS custom properties
-     _base.scss     → reset, html/body, .wrap, .btn
-     _nav.scss      → .nav, .searchbtn, .iconbtn, .foot
-     _hero.scss     → .hero, .eyebrow, .bio, .term, .social,
+     tokens.scss   → @font-face + all CSS custom properties
+     base.scss     → reset, html/body, .wrap, .btn
+     nav.scss      → .nav, .searchbtn, .iconbtn, .foot
+     hero.scss     → .hero, .eyebrow, .bio, .term, .social,
                       .sec, .post-row
-     _article.scss  → .article, .layout, .toc, .prose,
+     article.scss  → .article, .layout, .toc, .prose,
                       .codeblock, .copybtn, .comments
-     _resume.scss   → .resume, .cv-*, .skillgrp, .tag
-     _pages.scss    → .page-head, .archive__year, .filterbar,
+     resume.scss   → .resume, .cv-*, .skillgrp, .tag
+     pages.scss    → .page-head, .archive__year, .filterbar,
                       search modal, .tagcloud,
                       .publications, .notfound
    ============================================================ */

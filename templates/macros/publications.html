@@ -1,32 +1,47 @@
 {# ============================================================
-   macros/pub.html — Publication / talk entry
-   
-   Usage:  {% import "macros/pub.html" as pub %}
+   macros/publications.html — Publication / talk entry
+   Distill-style: date + status badge rail · serif title ·
+   authors · note · links, with an optional thumbnail on the right.
+
+   Usage:  {% import "macros/publications.html" as pub %}
            {{ pub::item(p=p) }}
 
    The `p` object comes from config.toml → [[extra.publications]]:
-     title   — paper or talk title (required)
-     venue   — "IEEE · 2025" or similar (required)
-     status  — "published" | "in review" (required, shows badge)
-     note    — short description line (optional)
-     links   — array of { label, href } objects (optional)
-               e.g. [{ label = "doi", href = "..." }, { label = "pdf", href = "..." }]
+     title    — paper or talk title (required)
+     venue    — "IEEE · 2025" or similar (required, shown on the rail)
+     status   — "published" | "in review" (required → badge)
+     badge    — optional override label for the published badge
+                (e.g. "peer-reviewed"); defaults to the status text
+     authors  — optional byline (HTML allowed; wrap your own name in
+                <span class="me">…</span> to emphasise it)
+     note     — short description line (optional)
+     image    — optional thumbnail path (e.g. "/publications/foo.png")
+     links    — optional array of { label, href }
    ============================================================ #}
 
 {% macro item(p) %}
-<div class="pub">
-  <div class="pub__head">
-    <span class="pub__title">
-      {{ p.title }}
-      <span class="cv-status {% if p.status == 'published' %}is-pub{% endif %}">{{ p.status }}</span>
-    </span>
-    <span class="pub__venue">{{ p.venue }}</span>
+{%- set is_pub = p.status == "published" or p.status == "peer-reviewed" -%}
+<div class="pubA {% if not p.image %}pubA--noimg{% endif %}">
+  <div class="pubA__rail">
+    <div class="pubA__date">{{ p.venue }}</div>
+    {% if is_pub %}
+      <span class="pubA__badge is-pub">{{ p.badge | default(value=p.status) }}</span>
+    {% else %}
+      <span class="pubA__badge is-review">{{ p.status }}</span>
+    {% endif %}
   </div>
-  {% if p.note %}<p class="pub__note">{{ p.note | safe }}</p>{% endif %}
-  {% if p.links %}
-  <div class="pub__links">
-    {% for l in p.links %}<a href="{{ l.href }}">{{ l.label }}</a>{% endfor %}
+  <div class="pubA__body">
+    <h3 class="pubA__title">{{ p.title }}</h3>
+    {% if p.authors %}<p class="pubA__authors">{{ p.authors | safe }}</p>{% endif %}
+    {% if p.note %}<p class="pubA__note">{{ p.note | safe }}</p>{% endif %}
+    {% if p.links %}
+    <div class="pubA__links">
+      {% for l in p.links %}<a href="{{ l.href }}">{{ l.label }}</a>{% endfor %}
+    </div>
+    {% endif %}
   </div>
+  {% if p.image %}
+  <div class="pubA__thumb"><img src="{{ p.image | safe }}" alt="{{ p.title }}" loading="lazy"></div>
   {% endif %}
 </div>
 {% endmacro item %}

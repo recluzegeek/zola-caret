@@ -1,5 +1,5 @@
 /* ==========================================================================
-   _hero.scss — Homepage hero, terminal block, social links, post sections
+   hero.scss — Homepage hero, terminal block, social links, post sections
    ========================================================================== */
 
 /* ---- Hero ---- */
@@ -156,7 +156,6 @@
   cursor: pointer;
 
   .posts &:last-child { border-bottom: 0; }
-  &:hover { padding-left: 8px; }
 }
 
 .post-row__date {

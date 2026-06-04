@@ -1,0 +1,19 @@
+{# ============================================================
+   shortcodes/figure.html — captioned image with soft shadow
+
+   Usage in Markdown:
+     {{ figure(src="/writings/diagram.png", caption="…") }}
+     {{ figure(src="…", alt="…", caption="…", wide=true) }}
+
+   Args:
+     src     — image path/URL (required)
+     alt     — alt text (optional, defaults to caption)
+     caption — serif-italic caption shown below (optional)
+     wide    — true to break full-bleed past the reading column
+   ============================================================ #}
+{%- set cap = caption | default(value="") -%}
+{%- set is_wide = wide | default(value=false) -%}
+<figure class="{% if is_wide %}wide{% endif %}">
+  <img src="{{ src }}" alt="{{ alt | default(value=cap) }}" loading="lazy">
+  {% if cap %}<figcaption>{{ cap | safe }}</figcaption>{% endif %}
+</figure>

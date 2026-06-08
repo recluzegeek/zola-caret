@@ -5,23 +5,28 @@ export default function initTerminal() {
   const term = document.querySelector('[data-term]');
   if (!term) return;
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
   const cmds = Array.from(term.querySelectorAll('.term__cmd'));
   const outs = Array.from(term.querySelectorAll('.term__out'));
   const prompt = term.querySelector('.term__prompt');
   if (!cmds.length) return;
-
   const texts = cmds.map(c => c.textContent.trim());
   cmds.forEach(c => { c.textContent = ''; });
   outs.forEach(o => { o.style.opacity = '0'; o.style.transition = 'opacity .28s ease'; });
-  if (prompt) prompt.style.opacity = '0';
 
+  // Hide entire rows so the prompt string doesn't flash before typing begins
+  const rows = cmds.map(c => c.closest('.term__row'));
+  rows.forEach(r => { if (r) r.style.visibility = 'hidden'; });
+
+  if (prompt) prompt.style.opacity = '0';
   const cursor = document.createElement('span');
   cursor.className = 'cursor';
-
   function typeCmd(idx) {
     if (idx >= cmds.length) { if (cursor.parentNode) cursor.remove(); if (prompt) prompt.style.opacity = ''; return; }
     const span = cmds[idx];
+
+    // Reveal this row just before typing starts
+    if (rows[idx]) rows[idx].style.visibility = '';
+
     span.parentNode.appendChild(cursor);
     const text = texts[idx];
     let j = 0;

@@ -7,15 +7,14 @@
     <h1>Hey, I’m {{ id.name }}.</h1>
     <p class="bio">{{ config.extra.bio | safe }}</p>
 
-    <div class="term">
+    <div class="term" data-term>
         {% for line in config.extra.terminal %}
-        <div>
-            <span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $ {{
-            line.cmd }}
+        <div class="term__row">
+            <span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $ <span class="term__cmd">{{ line.cmd }}</span>
         </div>
         <div class="term__out">{{ line.out }}</div>
         {% endfor %}
-        <div>
+        <div class="term__row term__prompt">
             <span class="pr"><span>{{ id.prompt }}</span>@msidev</span> ~ $
             <span class="cursor"></span>
         </div>
@@ -30,15 +29,21 @@
 
 <section class="sec">
     <div class="sec__head">
-        <h2 class="sec__title">writings</h2>
+        <h2 class="sec__title">{% if config.extra.homepage.mode == "featured" %}featured{% else %}writings{% endif %}</h2>
         <a class="sec__more" href="{{ get_url(path='writings') | safe }}"
             >ls ~/writings →</a
         >
     </div>
     {% set wsec = get_section(path="writings/_index.md") %}
+    {% set count = config.extra.homepage.count | default(value=4) %}
+    {% set mode = config.extra.homepage.mode | default(value="latest") %}
     <div class="posts">
-        {% for page in wsec.pages | slice(end=4) %}{{ ui::post_row(page=page,
-        dek=true) }}{% endfor %}
+        {% set_global shown = 0 %}
+        {% if mode == "featured" %}
+          {% set featured = wsec.pages | filter(attribute="extra.featured", value=true) %}
+          {% for page in featured %}{% if shown < count %}{{ ui::post_row(page=page, dek=true) }}{% set_global shown = shown + 1 %}{% endif %}{% endfor %}
+        {% endif %}
+        {% for page in wsec.pages %}{% if shown < count and not page.extra.featured %}{{ ui::post_row(page=page, dek=true) }}{% set_global shown = shown + 1 %}{% endif %}{% endfor %}
     </div>
 </section>
 {% endblock content %}

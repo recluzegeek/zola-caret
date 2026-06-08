@@ -87,6 +87,13 @@ tools = ["Neovim", "VS Code", "Git", "DBeaver", "Docker", "Claude Code"]
 # Controls ~/logo in nav, terminal prompt, and hero greeting.
 # Sub-tables must come AFTER all flat [extra] keys above.
 
+# Homepage post list: mode "featured" shows posts flagged
+# `featured = true` (in a post's [extra]) first, then fills with the
+# latest; mode "latest" just shows the most recent. count = how many.
+[extra.homepage]
+mode  = "featured"   # "featured" | "latest"
+count = 4
+
 [extra.identity]
 logo   = "msi"     # text after ~/  in the nav brand
 prompt = "msi"     # left side of terminal prompt: msi@msidev ~ $

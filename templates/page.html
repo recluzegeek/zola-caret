@@ -15,7 +15,7 @@ block content %}
             <span>{{ page.date | date(format="%d %b %Y") }}</span>
             <span class="dotsep">{{ page.reading_time }} min read</span>
             {% if page.taxonomies.tags %}<span class="dotsep"
-                >{% for t in page.taxonomies.tags %}#{{ t }}{% if not loop.last
+                >{% for t in page.taxonomies.tags %}<a class="metatag" href="{{ get_taxonomy_url(kind='tags', name=t) | safe }}">#{{ t }}</a>{% if not loop.last
                 %} {% endif %}{% endfor %}</span
             >{% endif %}
         </div>
@@ -39,23 +39,7 @@ block content %}
         {% endif %}
     </div>
 
-    {% if page.earlier or page.later %}
-    <footer
-        class="foot"
-        style="margin-top: 46px; border-top: 1px solid var(--border)"
-    >
-        <span
-            >{% if page.earlier %}<a href="{{ page.earlier.permalink | safe }}"
-                >← {{ page.earlier.title }}</a
-            >{% endif %}</span
-        >
-        <span
-            >{% if page.later %}<a href="{{ page.later.permalink | safe }}"
-                >{{ page.later.title }} →</a
-            >{% endif %}</span
-        >
-    </footer>
-    {% endif %} {% if config.extra.giscus_repo %}
+    {% if config.extra.giscus_repo %}
     <section class="comments">
         <script
             src="https://giscus.app/client.js"

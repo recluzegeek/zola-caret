@@ -214,21 +214,23 @@ See the [Zola theme docs](https://www.getzola.org/documentation/themes/overview/
 
 ## Pagination & homepage
 
-- **Homepage** post list is config-driven: `[extra.homepage]` with `mode`
-  (`featured` → posts flagged `featured = true` first, then latest; or
-  `latest`) and `count`. Flag a post by adding `featured = true` under its
+- **Homepage** post list is config-driven: `[extra.homepage]` with `mode` (`featured` → posts flagged `featured = true` first, then latest; or `latest`) and `count`. Flag a post by adding `featured = true` under its
   `[extra]`.
-- **Writings archive** paginates via `paginate_by` in
-  `content/writings/_index.md` (defaults to **7**). `section.html` renders
-  `paginator.pages` with newer/older controls.
+- **Writings archive** paginates via `paginate_by` in `content/writings/_index.md` (defaults to **7**). `section.html` renders
 
 ## Roadmap
 
-**Done** (shipped): README/DEVELOPMENT split · publications page
-(TL;DR, cite, talk-as-note, dimmed thumbs) · site-wide clickable tags
-· homepage + archive pagination · logo-stays mobile nav · modular `theme.js`
-· image tap-to-zoom (plain pointer cursor) · animated typing terminal ·
-tags-page footer alignment fix.
+**Done** (shipped):
+
+- README/DEVELOPMENT split
+- publications page (TL;DR, cite, talk-as-note, dimmed thumbs)
+- site-wide clickable tags
+- homepage + archive pagination
+- logo-stays mobile nav
+- modular `theme.js`
+- image tap-to-zoom (plain pointer cursor)
+- animated typing terminal ·
+- tags-page footer alignment fix.
 
 **Near-term**
 

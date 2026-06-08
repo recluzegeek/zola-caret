@@ -27,24 +27,19 @@
     <div class="nav__tools">
       <button class="searchbtn" data-search>search <kbd>⌘K</kbd></button>
       <button class="iconbtn" data-toggle-theme aria-label="Toggle theme">{{ ui::icon(name="sun") | replace(from='<svg', to='<svg class="ico-sun"') | safe }}{{ ui::icon(name="moon") | replace(from='<svg', to='<svg class="ico-moon"') | safe }}</button>
-      <button class="iconbtn nav__burger" data-menu-open aria-label="Open menu">{{ ui::icon(name="menu") | safe }}</button>
+      <button class="iconbtn nav__burger" data-menu-toggle aria-label="Menu">{{ ui::icon(name="menu") | replace(from='<svg', to='<svg class="ico-menu"') | safe }}{{ ui::icon(name="close") | replace(from='<svg', to='<svg class="ico-close"') | safe }}</button>
     </div>
   </nav>
 
-  {# full-screen mobile menu #}
+  {# full-screen mobile menu (logo stays in the nav above; burger ↔ close) #}
   <div class="mfull" id="mfull">
-    <div class="mfull__top">
-      <a class="mfull__brand" href="{{ get_url(path='/') | safe }}" data-menu-close><span class="tilde">~/</span><span>{{ id.logo }}</span></a>
-      <button class="mfull__x" data-menu-close aria-label="Close menu">{{ ui::icon(name="close") | safe }}</button>
-    </div>
     <nav class="mfull__links">
       {% for item in config.extra.nav %}
-      <a href="{{ get_url(path=item.route) | safe }}" class="{% if current_path and current_path is starting_with('/' ~ item.route) %}is-active{% endif %}">{{ item.label }}</a>
+      <a href="{{ get_url(path=item.route) | safe }}" data-menu-close class="{% if current_path and current_path is starting_with('/' ~ item.route) %}is-active{% endif %}">{{ item.label }}</a>
       {% endfor %}
     </nav>
     <div class="mfull__foot">
       <button class="searchbtn" data-search data-menu-close>{{ ui::icon(name="search") | safe }} search writings…</button>
-      <button class="iconbtn" data-toggle-theme aria-label="Toggle theme">{{ ui::icon(name="sun") | replace(from='<svg', to='<svg class="ico-sun"') | safe }}{{ ui::icon(name="moon") | replace(from='<svg', to='<svg class="ico-moon"') | safe }}</button>
     </div>
   </div>
 
@@ -76,6 +71,6 @@ window.__SEARCH = [
 {%- endfor -%}
 ];
 </script>
-<script src="{{ get_url(path='js/theme.js', trailing_slash=false) | safe }}"></script>
+<script src="{{ get_url(path='js/theme.js', trailing_slash=false) | safe }}" type="module"></script>
 </body>
 </html>

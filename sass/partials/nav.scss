@@ -113,7 +113,7 @@
 
 /* Footer */
 .foot {
-  max-width: 880px;
+  max-width: 680px;
   margin: 0 auto;
   padding: calc(40px * var(--space)) 28px calc(50px * var(--space));
   border-top: 1px solid var(--border);
@@ -127,6 +127,9 @@
   a { color: var(--muted); text-decoration: none; }
   a:hover { color: var(--accent); }
 }
+/* align the footer rule with the page column (fixes the wide-line overlap
+   on narrow pages like tags) — footer immediately follows <main> */
+.wrap--wide + .foot { max-width: 880px; }
 
 /* RSS link in footer */
 .foot__right { display: inline-flex; align-items: center; gap: 14px; }
@@ -136,46 +139,39 @@
 }
 
 /* Hamburger — mobile only */
+.nav { position: relative; z-index: 80; background: var(--bg); }
 .nav__burger { display: none; }
+.nav__burger .ico-close { display: none; }
+.site.is-menu-open .nav__burger .ico-menu { display: none; }
+.site.is-menu-open .nav__burger .ico-close { display: block; }
 
-/* Full-screen mobile menu (Maggie-Appleton style) */
+/* Full-screen mobile menu — the logo + burger stay in the nav above;
+   the panel fills the area below and the burger toggles to a close (✕) */
 .mfull {
   position: fixed;
   inset: 0;
   z-index: 70;
+  padding-top: 74px;            /* clear the nav bar so the logo stays visible */
   display: flex;
   flex-direction: column;
   background: var(--bg);
-  border-top: 3px solid var(--accent);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
+  transform: translateY(-8px);
   pointer-events: none;
   transition: opacity .26s ease, transform .26s ease, visibility .26s;
-
-  &.open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
 }
-
-.mfull__top { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; }
-.mfull__brand {
-  font-family: var(--mono); font-size: 16px; color: var(--ink); text-decoration: none; white-space: nowrap;
-  .tilde { color: var(--accent); }
-}
-.mfull__x {
-  width: 38px; height: 38px; display: grid; place-items: center;
-  border: 0; background: transparent; color: var(--ink-soft); cursor: pointer;
-  svg { width: 22px; height: 22px; }
-}
+.site.is-menu-open .mfull { opacity: 1; visibility: visible; transform: none; pointer-events: auto; }
 
 .mfull__links {
   display: flex;
   flex-direction: column;
-  padding: 14px 26px;
+  padding: 18px 26px 8px;
   flex: 1;
 
   a {
     font-family: var(--serif);
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 500;
     color: var(--ink-soft);
     text-decoration: none;
@@ -183,20 +179,20 @@
     opacity: 0;
     transform: translateY(10px);
     transition: opacity .32s ease, transform .32s ease, color .15s;
+    &:hover { color: var(--ink); }
     &.is-active { color: var(--accent); }
   }
 }
-.mfull.open .mfull__links a { opacity: 1; transform: none; }
-.mfull.open .mfull__links a:nth-child(1) { transition-delay: .07s; }
-.mfull.open .mfull__links a:nth-child(2) { transition-delay: .12s; }
-.mfull.open .mfull__links a:nth-child(3) { transition-delay: .17s; }
-.mfull.open .mfull__links a:nth-child(4) { transition-delay: .22s; }
-.mfull.open .mfull__links a:nth-child(5) { transition-delay: .27s; }
+.site.is-menu-open .mfull__links a { opacity: 1; transform: none; }
+.site.is-menu-open .mfull__links a:nth-child(1) { transition-delay: .05s; }
+.site.is-menu-open .mfull__links a:nth-child(2) { transition-delay: .10s; }
+.site.is-menu-open .mfull__links a:nth-child(3) { transition-delay: .15s; }
+.site.is-menu-open .mfull__links a:nth-child(4) { transition-delay: .20s; }
+.site.is-menu-open .mfull__links a:nth-child(5) { transition-delay: .25s; }
 
 .mfull__foot {
-  display: flex; gap: 10px; padding: 20px 26px 30px; border-top: 1px solid var(--border);
-  .searchbtn { flex: 1; justify-content: flex-start; height: 44px; font-size: 13px; }
-  .iconbtn { width: 44px; height: 44px; }
+  display: flex; gap: 10px; padding: 20px 26px 34px; border-top: 1px solid var(--border);
+  .searchbtn { flex: 1; justify-content: flex-start; height: 46px; font-size: 13px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -12,16 +12,6 @@ export default function initPublications() {
       setTimeout(() => { cite.classList.remove('is-copied'); cite.textContent = orig; }, 1400);
       return;
     }
-    const abx = e.target.closest('[data-abx]');
-    if (abx) {
-      const body = abx.closest('.pubA__body');
-      const panel = body && body.querySelector('[data-abxpanel]');
-      if (panel) {
-        const open = panel.hasAttribute('hidden');
-        panel.toggleAttribute('hidden', !open);
-        abx.setAttribute('aria-expanded', open ? 'true' : 'false');
-      }
-    }
   });
 
   let lb = null;

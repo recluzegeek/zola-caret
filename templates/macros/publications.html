@@ -1,22 +1,25 @@
 {# ============================================================
    macros/publications.html — Publication / talk entry
-   Distill-style: date + status badge rail · serif title ·
-   authors · note · links, with an optional thumbnail on the right.
+   Distill-style: venue + status rail · serif title · spaced authors ·
+   dimmed affiliation · one-line TL;DR · clickable tags · action pills
+   (doi/pdf/slides + optional talk · cite) · right thumbnail.
 
    Usage:  {% import "macros/publications.html" as pub %}
            {{ pub::item(p=p) }}
 
    The `p` object comes from config.toml → [[extra.publications]]:
-     title    — paper or talk title (required)
-     venue    — "IEEE · 2025" or similar (required, shown on the rail)
-     status   — "published" | "in review" (required → badge)
-     badge    — optional override label for the published badge
-                (e.g. "peer-reviewed"); defaults to the status text
-     authors  — optional byline (HTML allowed; wrap your own name in
-                <span class="me">…</span> to emphasise it)
-     note     — short description line (optional)
-     image    — optional thumbnail path (e.g. "/publications/foo.png")
-     links    — optional array of { label, href }
+     title        — paper or talk title (required)
+     venue        — "IEEE · 2025" (required, shown on the rail)
+     status       — "published" | "peer-reviewed" | "in review" (→ badge)
+     badge        — optional override label for the published badge
+     authors      — byline HTML; wrap your name in <span class="me">…</span>
+     tldr         — one-line punchy summary (preferred); bake your headline
+                    metric straight in, e.g. "…achieving 99.22% AUC on …"
+     talk         — true if you also presented it → adds an italic
+                    "Presented as a conference talk." note (no double-listing)
+     cite         — optional BibTeX/APA string → adds a [cite] copy button
+     image        — optional thumbnail path or URL (right column)
+     links        — optional array of { label, href } — MUST be last in TOML
    ============================================================ #}
 
 {% macro item(p) %}
@@ -30,18 +33,32 @@
       <span class="pubA__badge is-review">{{ p.status }}</span>
     {% endif %}
   </div>
+
   <div class="pubA__body">
     <h3 class="pubA__title">{{ p.title }}</h3>
-    {% if p.authors %}<p class="pubA__authors">{{ p.authors | safe }}</p>{% endif %}
-    {% if p.note %}<p class="pubA__note">{{ p.note | safe }}</p>{% endif %}
-    {% if p.links %}
+
+    {% if p.authors %}
+      <p class="pubA__authors is-spaced">{{ p.authors | safe }}</p>
+    {% endif %}
+
+    {% if p.tldr %}
+      <p class="pubA__tldr">{{ p.tldr | safe }}</p>
+    {% endif %}
+
+    {% if p.talk %}<p class="pubA__talknote">Presented as a conference talk.</p>{% endif %}
+
+    {% if p.links or p.cite %}
     <div class="pubA__links">
-      {% for l in p.links %}<a href="{{ l.href }}">{{ l.label }}</a>{% endfor %}
+      {% if p.links %}{% for l in p.links %}<a href="{{ l.href }}">{{ l.label }}</a>{% endfor %}{% endif %}
+      {% if p.cite %}<button type="button" class="pubA__pill pubA__cite" data-cite>cite</button>{% endif %}
     </div>
     {% endif %}
+
+    {% if p.cite %}<textarea class="pubA__citesrc" data-citesrc hidden>{{ p.cite }}</textarea>{% endif %}
   </div>
+
   {% if p.image %}
-  <div class="pubA__thumb"><img src="{{ p.image | safe }}" alt="{{ p.title }}" loading="lazy"></div>
+  <div class="pubA__thumb is-dimmed"><img src="{{ p.image | safe }}" alt="{{ p.title }}" loading="lazy" data-zoom></div>
   {% endif %}
 </div>
 {% endmacro item %}

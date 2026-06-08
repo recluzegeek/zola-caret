@@ -195,48 +195,58 @@ items = [
 
 # ── Section 10: Publications ─────────────────────────────────
 # status:  "published" / "peer-reviewed" → filled accent badge;
-#          anything else → neutral outline badge.
-# badge:   optional label override for the published badge.
-# authors: optional byline (HTML allowed; wrap your own name in
-#          <span class="me">…</span> to emphasise it).
-# image:   optional thumbnail shown on the right. Use a local path
-#          like "/publications/foo.png" (drop the file in static/),
-#          or any URL. Omit it and the entry spans full width.
+# authors: byline (HTML allowed; wrap your name in
+#          <span class="me">…</span> to bold + tint it).
+# tldr:    one-line punchy summary (preferred over `note`). Bake your
+#          headline metric straight in — academics scan for the number.
+# metric:  optional { label, value } chip on the rail. Use this OR a
+#          baked-in `tldr` number, not both, to avoid visual noise.
+# talk:    true if you also presented it → adds an italic
+#          "Presented as a conference talk." note (keep paper + talk as
+#          ONE entry; no double-listing).
+# cite:    optional BibTeX (or APA) string → adds a [cite] copy button.
+# image:   optional thumbnail shown on the right. Local path like
+#          "/publications/foo.png" (drop in static/) or any URL.
 # links:   optional array of { label, href } — MUST come last in the
 #          entry (TOML: scalar keys cannot follow a sub-table).
 
 [[extra.publications]]
-title   = "[Paper title]"
-venue   = "IEEE · 2025"
+title   = "DepthFuse: Multi-Scale Depth-Aware Feature Fusion for Monocular 3D Object Detection"
+venue   = "IEEE CVPR · 2025"
 status  = "published"
 badge   = "peer-reviewed"
-authors = '<span class="me">M. Salman Ilyas</span>, A. Collaborator, and R. Advisor'
-note    = "Deepfake detection. Presented as a conference talk."
+authors = '<span class="me">J. Hartley</span>, P. Nkomo, L. Svensson'
+tldr    = "A depth-guided feature pyramid achieving 78.4% AP on KITTI benchmark, outperforming prior monocular baselines by 6.1 points."
+talk    = true
+cite    = """
+@inproceedings{hartley2025depthfuse,
+  title     = {DepthFuse: Multi-Scale Depth-Aware Feature Fusion for Monocular 3D Object Detection},
+  author    = {Hartley, James and Nkomo, Priya and Svensson, Lars},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year      = {2025}
+}"""
 image   = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80&auto=format&fit=crop"
-
 [[extra.publications.links]]
 label = "doi"
-href  = "#"
-
+href  = "https://google.com"
 [[extra.publications.links]]
 label = "pdf"
 href  = "#"
-
 [[extra.publications.links]]
 label = "slides"
 href  = "#"
 
 [[extra.publications]]
-title   = "[Paper title]"
-venue   = "Journal · 2026"
+title   = "Temporal Consistency Regularisation for Video Semantic Segmentation Under Distribution Shift"
+venue   = "IJCV · 2026"
 status  = "in review"
-authors = '<span class="me">M. Salman Ilyas</span>, et al.'
-note    = "Deepfake detection."
+authors = '<span class="me">J. Hartley</span>, R. Okonkwo'
+tldr    = "A plug-in consistency loss that reduces flickering and improves mIoU by 3.8 points on driving footage recorded in unseen weather conditions."
 image   = "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80&auto=format&fit=crop"
 
 [[extra.publications]]
-title   = "[Paper title]"
-venue   = "Journal · 2026"
+title   = "Sparse Token Selection in Vision Transformers for Real-Time Edge Inference"
+venue   = "Workshop on Efficient Deep Learning, NeurIPS · 2026"
 status  = "in review"
-authors = '<span class="me">M. Salman Ilyas</span>'
-note    = "Deepfake detection."
+authors = '<span class="me">J. Hartley</span>'
+tldr    = "A learned token-pruning schedule that cuts ViT-B inference FLOPs by 41% with under 0.5% top-1 accuracy drop on ImageNet."

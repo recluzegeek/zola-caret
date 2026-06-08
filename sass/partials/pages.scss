@@ -274,9 +274,67 @@
 @media (max-width: 720px) {
   .pubA, .pubA.pubA--noimg { grid-template-columns: 1fr; gap: 13px; }
   .pubA__thumb { width: 100%; order: -1; }
-  .pubA__rail  { display: flex; align-items: center; gap: 12px; }
+  .pubA__rail  { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .pubA__badge { margin-top: 0; }
 }
+
+/* ---- publications v4: spaced authors · TL;DR · tags ·
+        cite / talk pills · dimmed thumb · lightbox ---- */
+
+.pubA__authors .me { color: var(--ink); font-weight: 600; }
+.pubA__authors.is-spaced { line-height: 1.7; margin-bottom: 2px; }
+
+.pubA__tldr { font-size: 16px; color: var(--ink-soft); margin: 11px 0 0; line-height: 1.55; max-width: 58ch; }
+
+.pubA__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.pubA__tag {
+  font-family: var(--mono); font-size: 11px; color: var(--muted); text-decoration: none;
+  padding: 2px 8px; border-radius: 6px; transition: all .15s;
+  &:hover { color: var(--accent); background: var(--accent-soft); }
+}
+
+.pubA__pill {
+  font-family: var(--mono); font-size: 11px; line-height: 1; padding: 5px 11px; border-radius: 7px;
+  border: 1px solid var(--border); color: var(--ink-soft); background: transparent;
+  cursor: pointer; transition: all .15s; display: inline-flex; align-items: center; gap: 5px;
+  &:hover { border-color: var(--accent-line); color: var(--ink); background: var(--accent-soft); }
+}
+.pubA__pill--talk { cursor: default; border-style: dashed; color: var(--accent); }
+.pubA__pill--talk:hover { background: transparent; border-color: var(--accent-line); color: var(--accent); }
+.pubA__cite.is-copied { border-color: var(--accent); color: var(--accent); }
+.pubA__caret { transition: transform .2s ease; font-size: 9px; }
+
+.pubA__talknote {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 0.875rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #787469;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.pubA__thumb img { cursor: pointer; }
+.pubA__thumb.is-dimmed img {
+  border: 1px solid var(--border-strong); opacity: .94; background: var(--surface); transition: opacity .2s ease;
+  &:hover { opacity: 1; }
+}
+
+/* image lightbox (tap-on-zoom) */
+.lightbox {
+  position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center;
+  padding: 5vmin; background: rgba(10, 10, 9, .86); backdrop-filter: blur(3px);
+  opacity: 0; visibility: hidden; transition: opacity .2s ease, visibility .2s; cursor: pointer;
+  &.open { opacity: 1; visibility: visible; }
+  img {
+    max-width: 100%; max-height: 100%; border-radius: 10px; object-fit: contain;
+    box-shadow: 0 24px 70px -20px rgba(0, 0, 0, .7);
+    transform: scale(.97); transition: transform .22s cubic-bezier(.4, 0, .2, 1);
+  }
+  &.open img { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .lightbox, .lightbox img { transition: none; } }
 
 /* ============================================================
    404

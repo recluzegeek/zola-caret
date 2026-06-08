@@ -12,21 +12,21 @@
    ============================================================ #}
 
 {% macro row(page, dek=false) %}
-<a class="post-row" href="{{ page.permalink | safe }}">
+<div class="post-row">
   <span class="post-row__date">{{ page.date | date(format="%d %b %Y") }}</span>
   <div class="post-row__body">
-    <p class="post-row__title">{{ page.title }}</p>
+    <a class="post-row__title post-row__link" href="{{ page.permalink | safe }}">{{ page.title }}</a>
     {% if dek %}
     <p class="post-row__dek">
       {{ page.extra.dek | default(value=page.summary | default(value="")) | safe }}
     </p>
     {% endif %}
-    <p class="post-row__tags">
-      {%- if not dek %}{{ page.reading_time }} min read · {% endif -%}
+    <div class="post-row__tags">
+      {%- if not dek %}<span class="post-row__rt">{{ page.reading_time }} min read</span>{% endif -%}
       {%- if page.taxonomies.tags -%}
-        {% for t in page.taxonomies.tags %}#{{ t }}{% if not loop.last %} {% endif %}{% endfor %}
+        {% for t in page.taxonomies.tags %}<a class="tagchip" href="{{ get_taxonomy_url(kind='tags', name=t) | safe }}">#{{ t }}</a>{% endfor %}
       {%- endif -%}
-    </p>
+    </div>
   </div>
-</a>
+</div>
 {% endmacro row %}

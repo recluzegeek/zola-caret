@@ -21,18 +21,39 @@ export default function initSearch() {
     if (top < results.scrollTop) results.scrollTop = top;
     else if (bot > results.scrollTop + results.clientHeight) results.scrollTop = bot - results.clientHeight;
   }
-  function render(q) {
-    q = (q || '').trim().toLowerCase();
+  function render(query) {
+    const q = (query || '').trim();
+    const needle = q.toLowerCase();
     const hits = DATA.filter(p => {
-      if (!q) return true;
-      return `${p.title} ${(p.tags || []).join(' ')} ${p.dek || ''} ${p.body || ''}`.toLowerCase().includes(q);
+      if (!needle) return true;
+      return `${p.title} ${(p.tags || []).join(' ')} ${p.dek || ''} ${p.body || ''}`.toLowerCase().includes(needle);
     });
-    results.innerHTML = hits.length
-      ? hits.map((p) => {
-          const tagList = p.tags && p.tags.length ? ' · ' + p.tags.map(t => '#' + t).join(' ') : '';
-          return `<a class="search-hit" href="${p.url}"><span class="search-hit__title">${p.title}</span><span class="search-hit__meta">${fmt(p.date) + tagList}</span></a>`;
-        }).join('')
-      : `<div class="search-empty">No writings match \u201c${q}\u201d.</div>`;
+
+    results.replaceChildren();
+    if (!hits.length) {
+      const empty = document.createElement('div');
+      empty.className = 'search-empty';
+      empty.textContent = `No writings match \u201c${q}\u201d.`;
+      results.appendChild(empty);
+    } else {
+      hits.forEach((p) => {
+        const hit = document.createElement('a');
+        hit.className = 'search-hit';
+        hit.href = p.url;
+
+        const title = document.createElement('span');
+        title.className = 'search-hit__title';
+        title.textContent = p.title;
+
+        const meta = document.createElement('span');
+        meta.className = 'search-hit__meta';
+        const tagList = p.tags && p.tags.length ? ' · ' + p.tags.map(t => '#' + t).join(' ') : '';
+        meta.textContent = fmt(p.date) + tagList;
+
+        hit.append(title, meta);
+        results.appendChild(hit);
+      });
+    }
     hitEls = Array.from(results.querySelectorAll('.search-hit'));
     selIdx = 0;
     paintSel();

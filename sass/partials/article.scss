@@ -213,7 +213,7 @@
 .tok-f { color: var(--ink); font-weight: 500; }
 .tok-c { color: var(--faint); font-style: italic; }
 .tok-s { color: #9d7e3a; }
-.site[data-theme="dark"] .tok-s { color: #c7a25a; }
+:root[data-theme="dark"] .site .tok-s { color: #c7a25a; }
 
 /* ---- Comments (Giscus embed) ---- */
 .comments {
@@ -232,8 +232,8 @@
   display: block;
   box-shadow: 0 1px 3px rgba(20, 20, 22, .04), 0 12px 26px -18px rgba(20, 20, 22, .22);
 }
-.site[data-theme="dark"] .prose figure img,
-.site[data-theme="dark"] .prose p > img { box-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 14px 30px -18px rgba(0, 0, 0, .55); }
+:root[data-theme="dark"] .site .prose figure img,
+:root[data-theme="dark"] .site .prose p > img { box-shadow: 0 1px 3px rgba(0, 0, 0, .4), 0 14px 30px -18px rgba(0, 0, 0, .55); }
 .prose figcaption { font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--muted); margin-top: 13px; line-height: 1.5; }
 .prose figure.wide { width: min(1000px, 92vw); max-width: none; margin-left: 50%; transform: translateX(-50%); }
 

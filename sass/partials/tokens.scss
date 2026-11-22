@@ -99,8 +99,9 @@
   --accent-ink:   #ffffff; /* text on --accent backgrounds */
 }
 
-/* Dark palette */
-.site[data-theme="dark"] {
+/* Dark palette — the theme attribute lives on <html> so it can be set
+   before first paint by the inline script in base.html. */
+:root[data-theme="dark"] .site {
   --bg:           #0f0f0d;
   --surface:      #16160f;
   --surface-2:    #1c1c16;

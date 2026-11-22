@@ -1,9 +1,19 @@
 {% import "macros/ui.html" as ui %}
 <!DOCTYPE html>
-<html lang="{{ lang | default(value=config.default_language) }}">
+<html lang="{{ lang | default(value=config.default_language) }}" data-theme="{{ config.extra.default_theme | default(value='light') }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {# resolve the saved/OS theme before the stylesheet paints to avoid a flash #}
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('caret.theme'); } catch (e) {}
+      var system = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var theme = (saved === 'light' || saved === 'dark') ? saved : (system ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   {# fonts are self-hosted in static/fonts — preload the two faces used above the fold #}
   <link rel="preload" href="{{ get_url(path='fonts/newsreader-v26-latin-regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="{{ get_url(path='fonts/jetbrains-mono-v24-latin-regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
@@ -15,7 +25,7 @@
 </head>
 <body>
 {% set id = config.extra.identity %}
-<div class="site" data-theme="{{ config.extra.default_theme | default(value='light') }}">
+<div class="site">
 
   <nav class="nav">
     <a class="nav__brand" href="{{ get_url(path='/') | safe }}"><span class="tilde">~/</span><span>{{ id.logo }}</span></a>

@@ -108,8 +108,8 @@
   /* Show the right icon per theme */
   .ico-sun, .ico-moon { display: none; }
 }
-.site[data-theme="light"] .iconbtn .ico-moon { display: block; }
-.site[data-theme="dark"]  .iconbtn .ico-sun  { display: block; }
+:root[data-theme="light"] .site .iconbtn .ico-moon { display: block; }
+:root[data-theme="dark"]  .site .iconbtn .ico-sun  { display: block; }
 
 /* Footer */
 .foot {

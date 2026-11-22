@@ -25,6 +25,8 @@ sass/
     pages.scss           archive, search modal, tags, publications, 404
 templates/
   base.html              shell: nav, footer, search modal
+  partials/
+    head-meta.html       canonical, OG/Twitter cards, feed discovery, favicon
   index.html             home
   page.html              single post (TOC, comments)
   section.html           writings archive (year-grouped + tag filter)
@@ -110,6 +112,23 @@ Edit `--accent` in `sass/partials/tokens.scss`; everything derives from it.
 Edit `--serif` / `--mono` at the bottom of `tokens.scss` and update the
 `@font-face` blocks (or the Google Fonts `<link>` in `base.html`) to match.
 Caret ships self-hosted woff2 by default — pick one source, don't load both.
+
+### Social previews, favicon & canonical URLs
+
+`templates/partials/head-meta.html` emits the description, canonical URL,
+Atom autodiscovery link, Open Graph/Twitter cards, `BlogPosting` JSON-LD on
+posts, and the optional favicon/theme-colour tags. Set site-wide defaults in
+`config.toml`:
+
+```toml
+og_image         = "/og.png"               # static path or absolute URL
+favicon          = "/favicon.ico"
+apple_touch_icon = "/apple-touch-icon.png"
+theme_color      = "#137a63"
+```
+
+Override the preview image per page with `og_image` under that page's
+`[extra]`.
 
 ### Enable analytics / comments
 

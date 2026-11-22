@@ -1,9 +1,5 @@
 {% extends "base.html" %} {% import "macros/ui.html" as ui %} {% block title
-%}{{ page.title }} · {{ config.title }}{% endblock title %} {% block description
-%}<meta
-    name="description"
-    content="{{ page.extra.dek | default(value=page.summary | default(value='')) | striptags }}"
-/>{% endblock description %} {% block wide %}wrap--wide{% endblock wide %} {%
+%}{{ page.title }} · {{ config.title }}{% endblock title %} {% block wide %}wrap--wide{% endblock wide %} {%
 block content %}
 <article class="article">
     <header class="article__head">

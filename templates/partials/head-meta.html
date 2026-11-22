@@ -1,0 +1,89 @@
+{# ============================================================
+   partials/head-meta.html — canonical, social cards, feed discovery
+
+   Included from base.html. Computes one description per page type so the
+   <meta> tags and the Open Graph/Twitter cards stay in sync.
+
+   Optional config keys (all in [extra]):
+     og_image          site-wide social preview image (static path or URL)
+     favicon           e.g. "/favicon.ico"
+     apple_touch_icon  e.g. "/apple-touch-icon.png"
+     theme_color       browser chrome colour, e.g. "#137a63"
+   Per-page override: extra.og_image in the page/section front matter.
+   ============================================================ #}
+{%- if page -%}
+  {%- set meta_title = page.title -%}
+  {%- set og_type = "article" -%}
+  {%- if page.extra.dek -%}
+    {%- set meta_desc = page.extra.dek -%}
+  {%- elif page.summary -%}
+    {%- set meta_desc = page.summary -%}
+  {%- else -%}
+    {%- set meta_desc = config.description -%}
+  {%- endif -%}
+  {%- set og_image = page.extra.og_image | default(value=config.extra.og_image | default(value="")) -%}
+{%- elif section -%}
+  {%- if section.title -%}
+    {%- set meta_title = section.title -%}
+  {%- else -%}
+    {%- set meta_title = config.title -%}
+  {%- endif -%}
+  {%- set og_type = "website" -%}
+  {%- if section.extra.tagline -%}
+    {%- set meta_desc = section.extra.tagline -%}
+  {%- elif section.description -%}
+    {%- set meta_desc = section.description -%}
+  {%- else -%}
+    {%- set meta_desc = config.description -%}
+  {%- endif -%}
+  {%- set og_image = section.extra.og_image | default(value=config.extra.og_image | default(value="")) -%}
+{%- elif term -%}
+  {%- set meta_title = "#" ~ term.name -%}
+  {%- set og_type = "website" -%}
+  {%- set meta_desc = config.description -%}
+  {%- set og_image = config.extra.og_image | default(value="") -%}
+{%- elif taxonomy -%}
+  {%- set meta_title = taxonomy.name -%}
+  {%- set og_type = "website" -%}
+  {%- set meta_desc = config.description -%}
+  {%- set og_image = config.extra.og_image | default(value="") -%}
+{%- else -%}
+  {%- set meta_title = config.title -%}
+  {%- set og_type = "website" -%}
+  {%- set meta_desc = config.description -%}
+  {%- set og_image = config.extra.og_image | default(value="") -%}
+{%- endif -%}
+{%- set meta_desc = meta_desc | default(value="") | striptags | truncate(length=200) -%}
+{%- set canonical = current_url | default(value=config.base_url) -%}
+{%- if og_image and not (og_image is starting_with("http")) -%}
+  {%- set og_image = get_url(path=og_image) -%}
+{%- endif %}
+  <meta name="description" content="{{ meta_desc }}">
+  <link rel="canonical" href="{{ canonical | safe }}">
+  <link rel="alternate" type="application/atom+xml" title="{{ config.title }} · atom" href="{{ get_url(path='atom.xml', trailing_slash=false) | safe }}">
+{%- if config.extra.favicon %}
+  <link rel="icon" href="{{ get_url(path=config.extra.favicon, trailing_slash=false) | safe }}">
+{%- endif %}
+{%- if config.extra.apple_touch_icon %}
+  <link rel="apple-touch-icon" href="{{ get_url(path=config.extra.apple_touch_icon, trailing_slash=false) | safe }}">
+{%- endif %}
+  <meta name="theme-color" content="{{ config.extra.theme_color | default(value='#137a63') }}">
+  <meta property="og:site_name" content="{{ config.title }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:title" content="{{ meta_title }}">
+  <meta property="og:description" content="{{ meta_desc }}">
+  <meta property="og:url" content="{{ canonical | safe }}">
+{%- if og_image %}
+  <meta property="og:image" content="{{ og_image | safe }}">
+{%- endif %}
+  <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ meta_title }}">
+  <meta name="twitter:description" content="{{ meta_desc }}">
+{%- if og_image %}
+  <meta name="twitter:image" content="{{ og_image | safe }}">
+{%- endif %}
+{%- if page %}
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":{{ page.title | json_encode | safe }},"description":{{ meta_desc | json_encode | safe }},"url":{{ canonical | json_encode | safe }},"datePublished":{{ page.date | json_encode | safe }}{% if page.updated %},"dateModified":{{ page.updated | json_encode | safe }}{% endif %}}
+  </script>
+{%- endif %}

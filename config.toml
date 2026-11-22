@@ -59,6 +59,14 @@ email = "hello@msidev.pk"
 # Footer link
 theme_repo = "https://github.com/recluzegeek/zola-caret"
 
+# SEO / social previews — all optional.
+# og_image is the site-wide default; override it per page with
+# `og_image = "/post-card.png"` under that page's [extra].
+# og_image          = "/og.png"              # static path or absolute URL
+# favicon           = "/favicon.ico"
+# apple_touch_icon  = "/apple-touch-icon.png"
+# theme_color       = "#137a63"
+
 # Uncomment to show a PDF download link on the resume page
 # resume_pdf = "/resume.pdf"
 

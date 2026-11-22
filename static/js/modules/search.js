@@ -10,6 +10,7 @@ export default function initSearch() {
   let DATA = [];
   let hitEls = [];
   let selIdx = 0;
+  let opener = null;
 
   function ensureData() {
     if (!dataPromise) {
@@ -113,6 +114,7 @@ export default function initSearch() {
   }
 
   function open() {
+    opener = document.activeElement;
     overlay.classList.add('open');
     refresh();
     setTimeout(() => input.focus(), 30);
@@ -122,6 +124,24 @@ export default function initSearch() {
     input.value = '';
     results.replaceChildren();
     hitEls = [];
+    if (opener && opener.focus) opener.focus();
+  }
+
+  function trapTab(e) {
+    const items = [input, ...hitEls].filter((el) => el.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (!overlay.contains(document.activeElement)) {
+      e.preventDefault();
+      first.focus();
+    } else if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   document.addEventListener('click', (e) => {
@@ -133,9 +153,16 @@ export default function initSearch() {
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); open(); return; }
     if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Tab') { trapTab(e); return; }
     if (e.key === 'Escape') { close(); }
     else if (e.key === 'ArrowDown') { e.preventDefault(); if (hitEls.length) { selIdx = (selIdx + 1) % hitEls.length; paintSel(); } }
     else if (e.key === 'ArrowUp') { e.preventDefault(); if (hitEls.length) { selIdx = (selIdx - 1 + hitEls.length) % hitEls.length; paintSel(); } }
     else if (e.key === 'Enter') { e.preventDefault(); const el = hitEls[selIdx]; if (el) location.href = el.getAttribute('href'); }
   });
+
+  /* Show the shortcut users actually have */
+  const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform || '') || /Mac OS X/.test(navigator.userAgent || '');
+  if (!isMac) {
+    document.querySelectorAll('.searchbtn kbd').forEach((kbd) => { kbd.textContent = 'Ctrl+K'; });
+  }
 }

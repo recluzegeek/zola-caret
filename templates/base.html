@@ -53,7 +53,7 @@
   </footer>
 
   {# search lives inside .site so it inherits theme tokens #}
-  <div class="search-overlay" id="searchOverlay">
+  <div class="search-overlay" id="searchOverlay" data-search-index="{{ get_url(path='search.json', trailing_slash=false) | safe }}">
     <div class="search-modal">
       <div class="search-modal__input"><span class="search-modal__icon">{{ ui::icon(name="search") | safe }}</span><input id="searchInput" placeholder="Search writings…" autocomplete="off"><kbd>esc</kbd></div>
       <div class="search-modal__results" id="searchResults"></div>
@@ -62,15 +62,7 @@
   </div>
 </div>
 
-{# lightweight client search index (no external libs) #}
-{% set wsec = get_section(path="writings/_index.md") %}
-<script>
-window.__SEARCH = [
-{%- for page in wsec.pages -%}
-{"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}, "date": {{ page.date | json_encode | safe }}, "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | safe }}, "dek": {{ page.extra.dek | default(value="") | json_encode | safe }}, "body": {{ page.content | striptags | truncate(length=1800) | json_encode | safe }}}{% if not loop.last %},{% endif %}
-{%- endfor -%}
-];
-</script>
+{# the search index is generated once at /search.json and fetched lazily #}
 <script src="{{ get_url(path='js/theme.js', trailing_slash=false) | safe }}" type="module"></script>
 </body>
 </html>

@@ -30,7 +30,9 @@ default_language = "en"
 compile_sass       = true
 build_search_index = false   # Caret uses its own lightweight client-side search
 generate_feeds     = true
-feed_filenames     = ["atom.xml"]
+# search.json is rendered by templates/search.json and fetched lazily by the
+# search overlay; atom.xml stays the human-facing feed.
+feed_filenames     = ["atom.xml", "search.json"]
 
 taxonomies = [
   { name = "tags", feed = true },

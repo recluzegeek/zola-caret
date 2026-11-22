@@ -190,11 +190,18 @@ is its own ES module under `static/js/modules/` (SRP):
 | `code-copy.js`    | wrap `<pre>` blocks with a copy button                |
 | `toc.js`          | animated TOC indicator + scroll-spy                   |
 | `mobile-menu.js`  | burger ↔ close, `.is-menu-open` on `.site`            |
-| `search.js`       | client-side filter over `window.__SEARCH`             |
+| `search.js`       | lazy fetch + ranked filter over `/search.json`        |
 | `publications.js` | cite copy, image lightbox                             |
 | `terminal.js`     | types the homepage terminal out (reduced-motion safe) |
 
 Add a behavior = add a module + one import line in `theme.js`.
+
+### Search index
+
+`templates/search.json` is rendered once as `/search.json` (declared in
+`feed_filenames`) and fetched the first time the search overlay opens, so the
+index is cached instead of inlined into every HTML page. It contains the full
+body of each post; `search.js` ranks title matches above tags, dek and body.
 
 ## Converting into a reusable theme
 

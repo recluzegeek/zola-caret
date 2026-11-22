@@ -4,9 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!--<link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=JetBrains+Mono:wght@400;500;600&display=swap">-->
+  {# fonts are self-hosted in static/fonts — preload the two faces used above the fold #}
+  <link rel="preload" href="{{ get_url(path='fonts/newsreader-v26-latin-regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="{{ get_url(path='fonts/jetbrains-mono-v24-latin-regular.woff2') | safe }}" as="font" type="font/woff2" crossorigin>
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
   {% include "partials/head-meta.html" %}
   <link rel="stylesheet" href="{{ get_url(path='style.css', trailing_slash=false) | safe }}">

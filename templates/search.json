@@ -1,0 +1,19 @@
+{# ============================================================
+   search.json — cached search index
+
+   Zola renders this as a feed (feed_filenames in config.toml) so the
+   index is written once to /search.json instead of being inlined into
+   every HTML page. The search overlay fetches it on first open.
+
+   Section and taxonomy feeds also render this template; they return an
+   empty array so the full index is not duplicated into every tag feed.
+   ============================================================ #}
+{%- if section is not defined and taxonomy is not defined -%}
+[
+{%- for page in pages -%}
+{"title": {{ page.title | json_encode | safe }}, "url": {{ page.permalink | json_encode | safe }}, "date": {{ page.date | json_encode | safe }}, "tags": {{ page.taxonomies.tags | default(value=[]) | json_encode | safe }}, "dek": {{ page.extra.dek | default(value="") | json_encode | safe }}, "body": {{ page.content | striptags | json_encode | safe }}}{% if not loop.last %},{% endif %}
+{%- endfor -%}
+]
+{%- else -%}
+[]
+{%- endif -%}

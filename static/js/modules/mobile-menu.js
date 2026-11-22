@@ -3,18 +3,23 @@
 export default function initMobileMenu() {
   const site = document.querySelector('.site');
   if (!site) return;
-  const lock = (on) => {
+  const burger = document.querySelector('[data-menu-toggle]');
+
+  const setOpen = (on) => {
+    site.classList.toggle('is-menu-open', on);
     document.documentElement.style.overflow = on ? 'hidden' : '';
     document.body.style.overflow = on ? 'hidden' : '';
+    if (burger) burger.setAttribute('aria-expanded', on ? 'true' : 'false');
   };
+
   document.addEventListener('click', (e) => {
     if (e.target.closest('[data-menu-toggle]')) {
-      lock(site.classList.toggle('is-menu-open'));
+      setOpen(!site.classList.contains('is-menu-open'));
     } else if (e.target.closest('[data-menu-close]')) {
-      site.classList.remove('is-menu-open'); lock(false);
+      setOpen(false);
     }
   });
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') { site.classList.remove('is-menu-open'); lock(false); }
+    if (e.key === 'Escape' && site.classList.contains('is-menu-open')) setOpen(false);
   });
 }

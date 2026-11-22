@@ -50,6 +50,24 @@ a:focus-visible, button:focus-visible, input:focus-visible {
   border-radius: 4px;
 }
 
+/* Skip link — off-screen until focused, then pinned top-left */
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 200;
+  transform: translateY(-200%);
+  padding: 9px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-decoration: none;
+  &:focus { transform: none; }
+}
+
 /* Responsive type & gutters */
 @media (max-width: 720px) {
   .hero h1     { font-size: 32px; }

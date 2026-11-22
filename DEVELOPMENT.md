@@ -11,8 +11,8 @@ content/
   writings/
     _index.md            archive settings (sort_by = "date")
     *.md                 one file per post
-  publications.md        publications   (data in config.toml § 10)
-  resume.md              resume         (data in config.toml § 8)
+  publications.md        publications   (data in config.toml)
+  resume.md              resume         (data in config.toml)
 sass/
   style.scss             imports only — edit the partials, not this file
   partials/
@@ -26,7 +26,7 @@ sass/
 templates/
   base.html              shell: nav, footer, search modal
   index.html             home
-  page.html              single post (TOC, prev/next, comments)
+  page.html              single post (TOC, comments)
   section.html           writings archive (year-grouped + tag filter)
   publications.html / resume.html
   taxonomy_list.html     /tags cloud
@@ -132,7 +132,7 @@ Netlify `netlify.toml`:
 [build]
 command     = "zola build"
 publish     = "public"
-environment = { ZOLA_VERSION = "0.19.2" }
+environment = { ZOLA_VERSION = "0.22.1" }
 ```
 
 ## Publications page fields
@@ -148,10 +148,7 @@ The publications page renders from `[[extra.publications]]` via
 | `badge`    | string            | Optional label override for the published badge                                               |
 | `authors`  | HTML              | Byline; wrap your name in `<span class="me">…</span>` to bold + tint it                       |
 | `tldr`     | string            | **One-line summary — bake your headline metric straight in**                                  |
-| `note`     | string            | Fallback one-liner if you don't set `tldr`                                                    |
-| `metric`   | `{label, value}`  | Optional rail chip. Use this **or** a baked-in `tldr` number, not both                        |
 | `talk`     | bool              | `true` adds an italic “Presented as a conference talk.” note (keep paper + talk as ONE entry) |
-| `abstract` | string            | Adds a collapsible `[abstract ▾]` panel (off by default)                                      |
 | `cite`     | string            | BibTeX/APA — adds a `[cite]` copy-to-clipboard button                                         |
 | `image`    | path/URL          | Right-column thumbnail (auto dimmed + tap-to-zoom)                                            |
 | `links`    | `[{label, href}]` | Pill links — **MUST come last** in the TOML entry                                             |
@@ -159,11 +156,7 @@ The publications page renders from `[[extra.publications]]` via
 **Design rationale (decided in the feedback round):**
 
 - **TL;DR over abstract.** Nobody reads a 250-word abstract on a portfolio;
-  one punchy line with the metric baked in is all most visitors need. The
-  collapsible `abstract` exists but is opt-in per entry.
-- **Metric: inline by default.** Bake the number into `tldr`
-  ("…achieving 99.22% AUC…"). The separate `metric` chip is an alternative,
-  not an addition — don't show both.
+  one punchy line with the metric baked in is all most visitors need.
 - **One entry per paper.** A conference talk for a paper you authored is not a
   separate publication; surface it with `talk = true`, never a second entry.
 - **Cite is high-utility, low-noise.** A quiet `[cite]` pill that copies BibTeX
@@ -198,7 +191,7 @@ is its own ES module under `static/js/modules/` (SRP):
 | `toc.js`          | animated TOC indicator + scroll-spy                   |
 | `mobile-menu.js`  | burger ↔ close, `.is-menu-open` on `.site`            |
 | `search.js`       | client-side filter over `window.__SEARCH`             |
-| `publications.js` | cite copy, abstract toggle, image lightbox            |
+| `publications.js` | cite copy, image lightbox                             |
 | `terminal.js`     | types the homepage terminal out (reduced-motion safe) |
 
 Add a behavior = add a module + one import line in `theme.js`.
@@ -216,7 +209,9 @@ See the [Zola theme docs](https://www.getzola.org/documentation/themes/overview/
 
 - **Homepage** post list is config-driven: `[extra.homepage]` with `mode` (`featured` → posts flagged `featured = true` first, then latest; or `latest`) and `count`. Flag a post by adding `featured = true` under its
   `[extra]`.
-- **Writings archive** paginates via `paginate_by` in `content/writings/_index.md` (defaults to **7**). `section.html` renders
+- **Writings archive** currently renders every post in one year-grouped list.
+  `paginate_by` in `content/writings/_index.md` plus `paginator.pages` in
+  `section.html` is the intended implementation but has not shipped yet.
 
 ## Roadmap
 
@@ -225,7 +220,6 @@ See the [Zola theme docs](https://www.getzola.org/documentation/themes/overview/
 - README/DEVELOPMENT split
 - publications page (TL;DR, cite, talk-as-note, dimmed thumbs)
 - site-wide clickable tags
-- homepage + archive pagination
 - logo-stays mobile nav
 - modular `theme.js`
 - image tap-to-zoom (plain pointer cursor)
@@ -234,6 +228,7 @@ See the [Zola theme docs](https://www.getzola.org/documentation/themes/overview/
 
 **Near-term**
 
+- Archive pagination (`paginate_by` + `paginator.pages`)
 - Open Graph tags (`og:*`) in `base.html`
 - `prefers-color-scheme` default before localStorage
 - Expose homepage `count` / archive `paginate_by` together in one config block

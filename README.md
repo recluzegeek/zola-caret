@@ -9,7 +9,7 @@ The name is the blinking terminal cursor _and_ the proofreader's insertion mark 
 
 ## Install
 
-Requires **Zola ≥ 0.18** — [install guide](https://www.getzola.org/documentation/getting-started/installation/).
+Requires **Zola ≥ 0.22** — [install guide](https://www.getzola.org/documentation/getting-started/installation/).
 
 ```bash
 git clone https://github.com/recluzegeek/zola-caret.git my-site
@@ -19,9 +19,9 @@ zola serve            # live reload → http://127.0.0.1:1111
 
 Then make it yours — **everything lives in `config.toml`**:
 
-1. **Identity** (§2): `logo`, `prompt`, `name`.
-2. **Bio & role** (§3, §7): `eyebrow`, `bio`, `role`.
-3. **Nav & socials** (§5, §6): add/remove `[[extra.nav]]` and `[[extra.socials]]`.
+1. **Identity** (`[extra.identity]`): `logo`, `prompt`, `name`.
+2. **Bio & role** (`[extra]`): `eyebrow`, `bio`, `role`.
+3. **Nav & socials** (`[[extra.nav]]`, `[[extra.socials]]`): add or remove entries.
 4. **Write a post**: drop a `.md` in `content/writings/` (frontmatter below).
 5. **Data pages**: fill `[[extra.experience]]`, `[[extra.education]]`, `[[extra.skills]]`, `[[extra.publications]]`.
 
@@ -62,4 +62,4 @@ Full guides — adding icons, fonts, shortcodes, the publications fields,
 analytics, comments, macros, packaging as a reusable theme, and the
 roadmap — live in **[DEVELOPMENT.md](DEVELOPMENT.md)**.
 
-MIT licensed. Spiritually indebted to Zola's [Apollo](https://www.getzola.org/themes/apollo/), Astro's [Pure](https://github.com/xiaohanyu/astro-paper), and the restraint of [thedataquarry.com](https://thedataquarry.com/).
+MIT licensed — see [LICENSE](LICENSE). Spiritually indebted to Zola's [Apollo](https://www.getzola.org/themes/apollo/), Astro's [AstroPaper](https://github.com/satnaing/astro-paper), and the restraint of [thedataquarry.com](https://thedataquarry.com/).

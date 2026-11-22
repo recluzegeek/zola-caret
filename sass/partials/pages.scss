@@ -90,7 +90,7 @@
   justify-content: center;
   padding-top: 13vh;
 
-  .site[data-theme="dark"] & { background: rgba(0, 0, 0, .7); }
+  :root[data-theme="dark"] .site & { background: rgba(0, 0, 0, .7); }
   &.open { display: flex; }
 }
 
@@ -268,7 +268,7 @@
     object-fit: cover;
     display: block;
     box-shadow: 0 1px 2px rgba(20, 20, 22, .04), 0 8px 18px -12px rgba(20, 20, 22, .22);
-    .site[data-theme="dark"] & { box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 22px -12px rgba(0, 0, 0, .5); }
+    :root[data-theme="dark"] .site & { box-shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 10px 22px -12px rgba(0, 0, 0, .5); }
   }
 }
 

@@ -206,7 +206,7 @@ is its own ES module under `static/js/modules/` (SRP):
 
 | Module            | Responsibility                                        |
 | ----------------- | ----------------------------------------------------- |
-| `theme-toggle.js` | light/dark persist + toggle                           |
+| `theme-toggle.js` | light/dark/system cycle, persisted; syncs Giscus     |
 | `code-copy.js`    | wrap `<pre>` blocks with a copy button                |
 | `toc.js`          | animated TOC indicator + scroll-spy                   |
 | `mobile-menu.js`  | burger ↔ close, `.is-menu-open` on `.site`            |
@@ -257,7 +257,6 @@ See the [Zola theme docs](https://www.getzola.org/documentation/themes/overview/
 
 - Archive pagination (`paginate_by` + `paginator.pages`)
 - Open Graph tags (`og:*`) in `base.html`
-- `prefers-color-scheme` default before localStorage
 - Expose homepage `count` / archive `paginate_by` together in one config block
 
 **Short-term**

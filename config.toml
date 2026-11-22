@@ -47,7 +47,7 @@ theme = "github-dark"             # available themes: https://github.com/getzola
 # sub-table. TOML does not allow reopening a table.
 
 [extra]
-default_theme = "dark"   # "light" or "dark" — user toggle persists in localStorage
+default_theme = "dark"   # fallback when the visitor has no saved preference; the OS setting wins
 
 # Your role lines
 eyebrow = "software engineer"

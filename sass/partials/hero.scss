@@ -60,7 +60,7 @@
   padding: 16px 18px;
   color: var(--ink-soft);
 
-  .site[data-theme="dark"] & { background: #0c0c08; }
+  :root[data-theme="dark"] .site & { background: #0c0c08; }
   .pr  { color: var(--accent); }
   .term__out { color: var(--ink); padding-left: 2px; }
 

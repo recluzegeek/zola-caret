@@ -7,9 +7,7 @@
 /* ---- Local font registry -----------------------------------------------
    Caret ships self-hosted fonts. These @font-face rules must match the
    actual filenames in static/fonts/. If you update the font versions,
-   update the src: urls here to match.
-   To switch to Google Fonts CDN instead, remove these rules and restore
-   the <link> in templates/base.html (the commented-out preconnect lines).
+   update the src: urls here to match, and the preload links in base.html.
    ------------------------------------------------------------------------ */
 
 /* Newsreader — editorial serif used for all reading content */

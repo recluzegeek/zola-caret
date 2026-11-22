@@ -110,8 +110,9 @@ Edit `--accent` in `sass/partials/tokens.scss`; everything derives from it.
 ### Change fonts
 
 Edit `--serif` / `--mono` at the bottom of `tokens.scss` and update the
-`@font-face` blocks (or the Google Fonts `<link>` in `base.html`) to match.
-Caret ships self-hosted woff2 by default — pick one source, don't load both.
+`@font-face` blocks to match. Caret ships self-hosted woff2 files; keep it
+that way (no third-party font requests) and preload the faces used above the
+fold in `base.html`.
 
 ### Social previews, favicon & canonical URLs
 
